@@ -111,7 +111,7 @@ def detect_rep():
                 peaks+=1
                 # print peaks
                 if peaks==2:
-                    if peak_range>1.20: 
+                    if peak_range>.6: 
                         exercise="curl"
                         # print exercise
                         all_reps["curls"]+=1
@@ -155,52 +155,10 @@ def main():
         
 
 
-# # rects = plt.bar(index, sets, bar_width,
-# #                  alpha=opacity,
-# #                  color='r',
-# #                  error_kw=error_config,
-# #                  label='Curls')
-# rect=plt.bar(1,1,bar_width)
-# # rect2, = ax.plot([], [],"g-", lw=2,label="Y")
-# # rect3, = ax.plot([], [],"b-", lw=2,label="Z")
-# # legend=plt.legend()
-# ax.set_ylim(0, 20.0)
-# ax.set_xlim(0, 1)
-# ax.set_xlabel('Sets')
-# ax.set_ylabel('Reps')
-# tick_labels = tuple(["Set"+ str(i+1) for i in range(1)])
-# # plt.xticks(index + bar_width, tick_labels)
-# ax.set_title("Daily workout - Curls")
-
-# last_rep=0
-# def run(reps):
-#     # global rect.
-#     # # global sets, opacity, error_config,bar_width,index
-#     # global last_rep
-#     # # update the data
-#     # # print "running"
-#     # # if sets[0]!=reps:
-#     # #     sets[0]=reps
-#     # #     rects = plt.bar(index, sets, bar_width,
-#     # #                  alpha=opacity,
-#     # #                  color='b',
-#     # #                  error_kw=error_config,
-#     # #                  label=reps)
-
-#     # if last_rep!=reps:
-#     #     last_rep=reps
-#     return plt.bar(1,reps,bar_width)
-#         # return rects
-# ani = animation.FuncAnimation(fig, run, main, blit=False, interval=10, repeat=False)
-# plt.show()
-# if __name__ == '__main__':
-#     main()
-
-
 fig,ax = plt.subplots()
 
-sets=[0,0]
-n_groups = 2
+sets=[0]
+n_groups = 1
 
 #goal line
 goal=10
@@ -212,8 +170,7 @@ error_config = {'ecolor': '0.3'}
 opacity = 1
 rects = plt.bar(index, sets, bar_width,
                  color='r',
-                 error_kw=error_config,
-                 label='Curls')
+                 error_kw=error_config)
 # rect=plt.bar(1,0,bar_width)
 # rect2, = ax.plot([], [],"g-", lw=2,label="Y")
 # rect3, = ax.plot([], [],"b-", lw=2,label="Z")
@@ -222,7 +179,7 @@ ax.set_ylim(0, 15.0)
 ax.set_xlim(0, n_groups)
 ax.set_xlabel('Sets')
 ax.set_ylabel('Reps')
-plt.xticks(index + bar_width, ('Bicep Curl', 'Lateral Raise', 'C', 'D', 'E'))
+plt.xticks(index + bar_width, ('Bicep Curl'))
 ax.set_title("Daily workout - Curls")
 sets=[]
 last_rep=[0,0]
@@ -232,7 +189,7 @@ def run(reps):
     # sets[0]=reps
     if all_reps['curls']>last_rep[0]:
         last_rep[0]=all_reps['curls']
-        rects = plt.bar(index+.25, [all_reps['curls'],all_reps['latRaise']], bar_width,
+        rects = plt.bar(index+.25, [all_reps['curls']], bar_width,
                      color='r',
                      error_kw=error_config,
                      label=reps)
