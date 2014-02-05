@@ -32,6 +32,7 @@ initialize_time=1 #second
 dominant_axis=3
 
 # ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
+# bluetooth pairing code is '1234'
 ser = serial.Serial('/dev/tty.OpenPilot-BT-DevB', 57600)
 
 def get_data_from_serial():
