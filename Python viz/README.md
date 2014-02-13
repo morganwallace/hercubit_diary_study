@@ -1,15 +1,37 @@
-#Python Viz
+#Python Viz/
 
-Make sure to run **xyz_out.ino** before executing Python scripts in this directory.
+	This README explains how to use the 'Hercubit' Python visualizations.
 
-##accelerometer_make_sample.py
-This python script will plot x, y, and z data along the x axis (time in seconds). 
-####You can specify these variables:
+****
 
-	#modifiable variables
-	runningTime=50 #seconds
-	exerciseType="lateral_raise"
-	movingWindow=False
-  
+Make sure to run **xyz_out_micro.ino** before executing Python scripts in this directory.
 
-Output files go in a folder **labeled_data** and then in another folder **[date&time+exerciseType]**
+All scripts in the **Python Viz/** folder call the **hercubit/** modules for standard functions and settings.
+
+----
+
+##Animations
+####animation_XYZ_Gs_movingWindow.py
+Plots x, y, and z acceleration in gs over time (seconds). The animation window moves as time proceeds.
+####saved_animations_and_data.py
+Similar to the previous script, x, y, and z acceleration in gs is plotted for 30 seconds and then saved in the ``saved_animations_and_data`` directory and then in a timestamped folder with:
+
+1. CSV file
+2. Python pickle file 
+3. PNG image of graph
+
+####barchart.py
+Bar graph counting bicep curls.
+
+ 
+
+##hercubit/
+
+
+| Modules in hercubit | Description|
+|---------|---|
+|``settings.py``|configures settings like: Serial port, sample rate, etc|
+|``device.py``|Creates a serial connection to the device and pulls accelerometer data out one sample at a time, using ``acc_data()`` - call this function in a loop for each sample rate|
+|``peak_detect.py``|Detects peaks and dips (pattern recognition) in accelerometer data and output. Will count repititions with free weights|
+|``example_using_peak_detect.py``|Shows how importing ``peak_detect.py`` works|
+|naive_bayes_detect.py|...coming soon|

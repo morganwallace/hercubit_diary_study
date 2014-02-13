@@ -9,7 +9,7 @@ from os.path import join
 import csv
 import time
 
-filename=join("labeled_data",raw_input("name this training set: "))
+# filename=join("labeled_data",raw_input("name this training set: "))
 samples=[]
 def data_gen():
     global samples
@@ -63,7 +63,7 @@ def run(data):
     lineZ.set_data(tdata, zdata)
     return lineX,lineY,lineZ
 
-ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
+ser = serial.Serial('/dev/tty.OpenPilot-BT-DevB', 57600)
 def get_data_from_serial():
     s=ser.readline()
     print s

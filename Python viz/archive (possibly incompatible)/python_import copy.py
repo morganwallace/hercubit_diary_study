@@ -3,6 +3,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from chart_counter.Hercubit.settings import *
 
 def data_gen():
     t = data_gen.t
@@ -42,7 +43,7 @@ def animate():
 	plt.show()
 
 
-ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
+ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
 def get_data_from_serial():
 		pitch_roll=ser.readline()
 		print pitch_roll

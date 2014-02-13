@@ -11,7 +11,7 @@ def data_gen():
         cnt+=1
         t += 0.05
         y=get_data_from_serial()
-        if y!= None: yield t, y
+        if y!= None: return t, y
 data_gen.t = 0
 
 

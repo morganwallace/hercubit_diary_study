@@ -8,7 +8,7 @@ import matplotlib.animation as animation
 import pickle
 import os
 import csv
-
+from hercubit import settings
 
 
 #modifiable variables
@@ -20,7 +20,7 @@ sampleRate =0.2 # set in arduino code!!
 #Make OS appropriate output filename
 # now =time.asctime()[4:-5]
 now = time.strftime("%Y-%m-%d__%H:%M:%S")
-dirname="labeled_data/"+now+"_"+exerciseType
+dirname="saved_animations_and_data/"+now+"_"+exerciseType
 filename=now+"_"+exerciseType
 
 #Initialized variables
@@ -123,7 +123,7 @@ def run(data):
     lineZ.set_data(tdata, zdata)
     return lineX,lineY,lineZ
 
-ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
+ser = serial.Serial(settings.SERIAL_PORT, settings.SERIAL_SPEED)
 # time.sleep(.5)
 def get_data_from_serial():
     serialOutput=ser.readline()
