@@ -10,8 +10,6 @@ import serial
 import time
 import os
 import pickle
-import hercubit.settings as settings
-import hercubit.device as device
 
 '''
 #################################################
@@ -26,16 +24,29 @@ so that Processing can read it in real-time
 data=[]
 slopes=[]
 start_time=time.time()
-
-# ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
-# bluetooth pairing code is '1234'
-
-
-sampleRate=.1 #this should match the rate from the code on Arduino
+######  Preferences Variables  ######
+sampleRate=.1 #this is set by the code on Arduino
 max_rep_window=5 #seconds
 min_rep_window=.4 #seconds
 initialize_time=1 #second
 dominant_axis=3
+
+# ser = serial.Serial('/dev/tty.usbmodem1421', 9600)
+# bluetooth pairing code is '1234'
+ser = serial.Serial('/dev/tty.OpenPilot-BT-DevB', 57600)
+
+def get_data_from_serial():
+    global ser
+    serialOutput=ser.readline()
+    serialTuple=serialOutput.split(",")
+    if len(serialTuple)!=3:
+        return None
+    for i in range(len(serialTuple)):
+        try:serialTuple[i]=float(serialTuple[i].strip())
+        except: return None
+    x, y, z = serialTuple[0],serialTuple[1],serialTuple[2]
+    t=time.time()
+    return t,x,y,z
 
 
 def get_slope(axis, samples=2):
@@ -57,6 +68,10 @@ def rep_event(exer, root_times=(0,0)):
         reps+=1
         print reps
         yield reps
+
+def data_gen():
+    global reps
+    yield reps
 
 peaks=0
 prev_slope=0
@@ -90,13 +105,13 @@ def detect_rep():
         y_slope=get_slope(dominant_axis)
         # print str(y_slope)
         d_slope=prev_slope- y_slope
-        if  peak_range>.8:
+        if  peak_range>.6:
             if (prev_slope>0 and y_slope<0) or (prev_slope<0 and y_slope>0):
                 print "peak with range: %f" % peak_range
                 peaks+=1
                 # print peaks
                 if peaks==2:
-                    if peak_range>.6: 
+                    if peak_range>.99: 
                         exercise="curl"
                         # print exercise
                         all_reps["curls"]+=1
@@ -130,7 +145,7 @@ def main():
             del data[0]
             
         #Get time, x, y, and z from serial port
-        data.append(device.acc_data())
+        data.append(get_data_from_serial())
         # print data
         if data:
             # last_read=time.time()
@@ -192,7 +207,6 @@ def run(reps):
 ani = animation.FuncAnimation(fig, run, main, blit=False, interval=10,
 repeat=True)
 plt.show()
-
 if __name__ == '__main__':
     main()
 

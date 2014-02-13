@@ -1,3 +1,0 @@
-import device
-
-device.main()
