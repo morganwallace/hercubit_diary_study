@@ -14,6 +14,16 @@ All scripts in the **Python Viz/** folder call the **hercubit/** modules for sta
 
 ----
 
+##Server (with web sockets)
+
+|File|Description|
+|-------|
+|app.py|Flask server using FlaskSockets-IO to send data back and forth.|
+|templates/index.html|Web page rendered when app.py is run. Uses javascript to send and receive with web sockets.|
+
+
+
+---
 ##Animations
 ####animation_XYZ_Gs_movingWindow.py
 Plots x, y, and z acceleration in gs over time (seconds). The animation window moves as time proceeds.
