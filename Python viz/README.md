@@ -17,7 +17,7 @@ All scripts in the **Python Viz/** folder call the **hercubit/** modules for sta
 ##Server (with web sockets)
 
 |File|Description|
-|-------|
+|---|----|
 |app.py|Flask server using FlaskSockets-IO to send data back and forth.|
 |templates/index.html|Web page rendered when app.py is run. Uses javascript to send and receive with web sockets.|
 
