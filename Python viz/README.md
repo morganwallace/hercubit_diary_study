@@ -1,11 +1,15 @@
-#Python Viz/
+#Python Viz
 
-	This README explains how to use the 'Hercubit' Python visualizations.
+*This README explains how to use the 'Hercubit' Python visualizations in the 'Python Viz' folder.*
+
+**Start by using pip to setup dependencies:**
+
+`` $ pip install -r requirements.txt``
 
 ****
-
-Make sure to run **xyz_out_micro.ino** before executing Python scripts in this directory.
-
+#####double check...
+Make sure to run **xyz_out_micro.ino** on the ardiuno and connect it via USB or Bluetooth before executing Python scripts in this directory.
+#####FYI
 All scripts in the **Python Viz/** folder call the **hercubit/** modules for standard functions and settings.
 
 ----
