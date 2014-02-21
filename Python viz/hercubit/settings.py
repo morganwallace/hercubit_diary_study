@@ -12,8 +12,13 @@ try: # Mac OSX
 		SERIAL_SPEED=57600
 	except:
 		# USB
-		SERIAL_PORT='/dev/tty.usbmodem1421'
-		SERIAL_SPEED=9600
+		try:
+			SERIAL_PORT='/dev/tty.usbmodem1421'
+			SERIAL_SPEED=9600
+		except:
+			SERIAL_PORT='/dev/tty.usbmodem1422'
+			SERIAL_SPEED=9600
+
 except: # Windows * CHARLES- PLEASE FILL THIS IN
 	try:
 		# Bluetooth

@@ -16,8 +16,10 @@ def acc_data():
         sleep(.005)
     t = time()
     t0=t
+    print "this prints"
     x,y,z=get_data_from_serial()
     sample =(t,x,y,z)
+    print sample
     return sample
 
 
@@ -30,7 +32,7 @@ def get_data_from_serial():
         try: s[i]=float(s[i].strip())
         except: return None
     x,y,z = s[0],s[1],s[2]
-    # print str(x,y,z)
+    print str(x,y,z)
     return x,y,z
 
 def run():

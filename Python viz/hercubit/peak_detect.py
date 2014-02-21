@@ -55,24 +55,32 @@ def detect_rep():
 	    ## This determines the sensitivity of the rep counter.
 	    if  peak_range>.7:
 	        if (prev_slope>0 and y_slope<0) or (prev_slope<0 and y_slope>0):
-	            print "peak with range: %f" % peak_range
+	            # print "peak with range: %f" % peak_range
 	            peaks+=1
 	            if peaks==2:
 					exercise="curl"
 					all_reps["curls"]+=1
-					print exercise + str(all_reps["curls"])
+					# print exercise + str(all_reps["curls"])
 					del data[:-1]
 					reps+=1
-					print reps
+					# print reps
+				
 					# print "test"
 					peaks=0
 					peak, dip,range_z=sample[dominant_axis],sample[dominant_axis], 0
 					# return all_reps
 	    prev_slope=y_slope
 
+
 def main():
+	global reps
+	r=reps
 	while True:
 		detect_rep()
+		if reps !=r:
+			r=reps
+			with open('tmp.json',"w") as f:
+				f.write(reps)
 
 if __name__ == '__main__':
 	main()
