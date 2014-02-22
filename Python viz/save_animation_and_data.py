@@ -19,7 +19,7 @@ sampleRate =0.2 # set in arduino code!!
 
 #Make OS appropriate output filename
 # now =time.asctime()[4:-5]
-now = time.strftime("%Y-%m-%d__%H:%M:%S")
+now = time.strftime("%Y-%m-%d__%H-%M-%S")
 dirname="saved_animations_and_data/"+now+"_"+exerciseType
 filename=now+"_"+exerciseType
 
