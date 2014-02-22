@@ -1,19 +1,33 @@
 #Settings for Hercubit
 
 import os
+import serial
 
 ####  #Serial Connection
+
+
 # bluetooth
 try: # Mac OSX
 	try:
 		#Bluetooth
+		print "Attempting to connect to bluetooth...\n"
 		SERIAL_PORT='/dev/tty.OpenPilot-BT-DevB'
 
 		SERIAL_SPEED=57600
+		ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
+		print"p"
 	except:
 		# USB
-		SERIAL_PORT='/dev/tty.usbmodem1421'
-		SERIAL_SPEED=9600
+		try:
+			print "Attempting to connect to USB 1...\n"
+			SERIAL_PORT='/dev/tty.usbmodem1421'
+			SERIAL_SPEED=9600
+			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
+		except:
+			print "Attempting to connect to USB 2...\n"
+			SERIAL_PORT='/dev/tty.usbmodem1422'
+			SERIAL_SPEED=9600
+			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
 except: # Windows * CHARLES- PLEASE FILL THIS IN
 	try:
 		# Bluetooth
@@ -21,10 +35,36 @@ except: # Windows * CHARLES- PLEASE FILL THIS IN
 	except:
 		# USB
 		pass
-print "using serial port:  " + SERIAL_PORT
 
-import serial
-ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
+
+	
+# print type(ser)
+	
+try:
+	ser
+	print "using serial port:  " + SERIAL_PORT
+except:
+ #if no serial connection available simulate with old file
+	# import pickle
+	print "\nNo serial connection available. Falling back on archived data..."
+	from time import sleep
+	sleep(1)
+	archive=os.path.join("..","saved_animations_and_data")
+	for arch_folder in os.listdir(archive):
+		if arch_folder[0] != ".":
+			selected_archive=os.path.join(archive, arch_folder)
+			for arch_file in os.listdir(selected_archive):
+				if arch_file[-4:]==".csv": # if you find a python pickle file
+					pickled_file=os.path.join(selected_archive,arch_file)
+					print "using archive file: "+pickled_file
+					sleep(1)
+					ser = open(pickled_file)
+					ser.readline()
+					
+					#break out of for loops, just getting the first csv file
+					break
+			break
+	type(ser)
 ####
 
 

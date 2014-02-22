@@ -1,15 +1,29 @@
-#Python Viz/
+#Python Viz
 
-	This README explains how to use the 'Hercubit' Python visualizations.
+*This README explains how to use the 'Hercubit' Python visualizations in the 'Python Viz' folder.*
+
+**Start by using pip to setup dependencies:**
+
+`` $ pip install -r requirements.txt``
 
 ****
-
-Make sure to run **xyz_out_micro.ino** before executing Python scripts in this directory.
-
+#####double check...
+Make sure to run **xyz_out_micro.ino** on the ardiuno and connect it via USB or Bluetooth before executing Python scripts in this directory.
+#####FYI
 All scripts in the **Python Viz/** folder call the **hercubit/** modules for standard functions and settings.
 
 ----
 
+##Server (with web sockets)
+
+|File|Description|
+|---|----|
+|app.py|Flask server using FlaskSockets-IO to send data back and forth.|
+|templates/index.html|Web page rendered when app.py is run. Uses javascript to send and receive with web sockets.|
+
+
+
+---
 ##Animations
 ####animation_XYZ_Gs_movingWindow.py
 Plots x, y, and z acceleration in gs over time (seconds). The animation window moves as time proceeds.
