@@ -56,7 +56,7 @@ def save(samples):
     global dirname
     global filename
     os.mkdir(dirname)
-    picpath=dirname+"/test.png"
+    picpath=os.path.join(dirname,exerciseType+".png")
     plt.savefig(picpath)
     pickle.dump(samples,open(dirname+"/"+filename+".p","wb"))
     with open(dirname+"/"+filename+".csv","wb") as csvFile:
