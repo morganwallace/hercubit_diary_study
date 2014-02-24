@@ -4,9 +4,8 @@ import os
 import serial
 
 ####  #Serial Connection
-
-
 # bluetooth
+global ser
 try: # Mac OSX
 	try:
 		#Bluetooth
@@ -15,7 +14,7 @@ try: # Mac OSX
 
 		SERIAL_SPEED=57600
 		ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
-		print"p"
+		print"\nBluetooth Connected!"
 	except:
 		# USB
 		try:
@@ -23,11 +22,13 @@ try: # Mac OSX
 			SERIAL_PORT='/dev/tty.usbmodem1421'
 			SERIAL_SPEED=9600
 			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
+			print"\USB 1 Connected!"
 		except:
 			print "Attempting to connect to USB 2...\n"
 			SERIAL_PORT='/dev/tty.usbmodem1422'
 			SERIAL_SPEED=9600
 			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
+			print"\nUSB 2 Connected!"
 except: # Windows * CHARLES- PLEASE FILL THIS IN
 	try:
 		# Bluetooth
@@ -49,7 +50,10 @@ except:
 	print "\nNo serial connection available. Falling back on archived data..."
 	from time import sleep
 	sleep(1)
-	archive=os.path.join("..","saved_animations_and_data")
+	if os.getcwd()[os.getcwd().rfind("/"):] == "/hercubit":
+		archive=os.path.join("..","saved_animations_and_data")
+	else:
+		archive=os.path.join("saved_animations_and_data")
 	for arch_folder in os.listdir(archive):
 		if arch_folder[0] != ".":
 			selected_archive=os.path.join(archive, arch_folder)
