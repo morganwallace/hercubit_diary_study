@@ -2,7 +2,7 @@
 
 *This README explains how to use the 'Hercubit' Python visualizations in the 'Python Viz' folder.*
 
-**Start by using pip to setup dependencies:**
+**Start by using pip to setup dependencies (you might also want to create a virtual environment for this):**
 
 `` $ pip install -r requirements.txt``
 

@@ -1,6 +1,7 @@
 import device
 import settings
 
+device_data_generator=device.acc_data()
 data=[]
 peaks=0
 prev_slope=0
@@ -20,7 +21,7 @@ def get_slope(axis, samples=2):
 
 
 def detect_rep():
-	global data, peaks, prev_slope, peak, dip, peak_range, all_reps, reps, dominant_axis
+	global data, peaks, prev_slope, peak, dip, peak_range, all_reps, reps, dominant_axis,device_data_generator
 	"""Use changes in slope to find peaks. 
 	After a second peak is detected, trigger the rep_event function
 
@@ -30,7 +31,11 @@ def detect_rep():
 	if len(data)*settings.sampleRate>=settings.max_rep_window: 
 		del data[0]
 	# Fetch accelerometer data
-	sample=device.acc_data()
+	try:
+		sample=device_data_generator.next()
+	except:
+		print "\nNo more data"
+		quit()
 	data.append(sample)
 	# print data
     #data  looks like [(.2,,5,-1.1,.4),(.4,,5,-1.1,.4),...]
@@ -78,9 +83,10 @@ def main():
 	while True:
 		detect_rep()
 		if reps !=r:
+			print reps
 			r=reps
-			with open('tmp.json',"w") as f:
-				f.write(reps)
+		# 	with open('tmp.json',"w") as f:
+		# 		f.write(reps)
 
 if __name__ == '__main__':
 	main()

@@ -1,5 +1,4 @@
 from __future__ import division
-import serial
 import time
 # import numpy as np
 import matplotlib.pyplot as plt
@@ -8,25 +7,25 @@ import matplotlib.animation as animation
 import pickle
 import os
 import csv
-from hercubit import settings
+from hercubit.settings import *
+from hercubit.device import acc_data
+device_sample_generator = acc_data()
 
 
-#modifiable variables
-runningTime=30 #seconds
-exerciseType="test"
+### ADJUST THESE VARIALBES ###
+#
+exerciseType="curls"
+runningTime=1 #seconds
 movingWindow=False
-sampleRate =0.2 # set in arduino code!!
+#
+###
 
-#Make OS appropriate output filename
-# now =time.asctime()[4:-5]
 now = time.strftime("%Y-%m-%d__%H-%M-%S")
-dirname="saved_animations_and_data/"+now+"_"+exerciseType
+dirname=os.path.join("saved_animations_and_data",now+"_"+exerciseType)
 filename=now+"_"+exerciseType
 
 #Initialized variables
 samples=[]
-
-
 
 fig,ax = plt.subplots()
 
@@ -49,41 +48,7 @@ ax.set_title(exerciseType)
 xs=[]
 ys=[]
 zs=[]
-def data_gen():
-    '''Generator that yields data for real-time animation
-    Get's data from the
-    '''
-    global runningTime
-    global samples
-    global sampleRate
-    global xs,ys,zs
 
-    
-    t = data_gen.t
-    timePassed = 0
-
-    # limit the time to runningTime
-    while timePassed < runningTime: 
-        timePassed+=sampleRate
-        t += sampleRate
-        try:
-            x,y,z=get_data_from_serial()
-        except:
-            x,y,z =0,0,0
-        if y!= None: 
-        	
-	    	#convert to m/(s*s) and 
-	    	xdisplacement=x*10*timePassed*timePassed
-
-	        data =t,x,y,z 
-	        samples.append(data)
-	        yield data
-    #save to file for later analysis.
-    ser.close()
-    save(samples)
-    print "done"
-    
-data_gen.t = 0
 
 def save(samples):
     '''Save csv and png of sampled data
@@ -101,11 +66,19 @@ def save(samples):
             writer.writerow((i))
 
 
-
+t0=time.time()
 def run(data):
     # update the data
     global movingWindow
+    global t0
+
+    # EXIT sceanario 
+    if t0+runningTime<=time.time():
+        ser.close()
+        save(samples)
+
     t,x,y,z = data
+    t=t-t0
     tdata.append(t)
     ydata.append(y)
     xdata.append(x)
@@ -123,23 +96,14 @@ def run(data):
     lineZ.set_data(tdata, zdata)
     return lineX,lineY,lineZ
 
-ser = serial.Serial(settings.SERIAL_PORT, settings.SERIAL_SPEED)
-# time.sleep(.5)
-def get_data_from_serial():
-    serialOutput=ser.readline()
-    # print serialOutput
-    s=serialOutput.split(",")
-    if len(s)!=3:
-        return None
-    for i in range(len(s)):
-        try:s[i]=float(s[i].strip())
-        except: return None
-    # print s
-    x, y, z = s[0],s[1],s[2]
-    return x,y,z
 
-ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=100,
+
+ani = animation.FuncAnimation(fig, run, acc_data, blit=False, interval=10,
     repeat=False)
+
+
+# save a video of this animation
 # ani.save("test.mp4")
 plt.show()
+
 
