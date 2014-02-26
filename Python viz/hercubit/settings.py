@@ -2,7 +2,7 @@
 
 import os
 import serial
-
+conn_type=""
 ####  #Serial Connection
 # bluetooth
 global ser
@@ -15,6 +15,7 @@ try: # Mac OSX
 		SERIAL_SPEED=57600
 		ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
 		print"\nBluetooth Connected!"
+		conn_type="bluetooth"
 	except:
 		# USB
 		try:
@@ -29,6 +30,7 @@ try: # Mac OSX
 			SERIAL_SPEED=9600
 			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
 			print"\nUSB 2 Connected!"
+		conn_type="usb"
 except: # Windows * CHARLES- PLEASE FILL THIS IN
 	try:
 		# Bluetooth
@@ -48,6 +50,7 @@ except:
  #if no serial connection available simulate with old file
 	# import pickle
 	print "\nNo serial connection available. Falling back on archived data..."
+	conn_type="archive"
 	from time import sleep
 	sleep(1)
 	if os.getcwd()[os.getcwd().rfind("/"):] == "/hercubit":

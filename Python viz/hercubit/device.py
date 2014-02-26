@@ -26,7 +26,7 @@ def acc_data():
         else:
             yield None
         x,y,z = sample[0], sample[1],sample[2]
-        print (t,x,y,z)
+        # print (t,x,y,z)
         yield t,x,y,z
 
 

@@ -15,7 +15,7 @@ device_sample_generator = acc_data()
 ### ADJUST THESE VARIALBES ###
 #
 exerciseType="curls"
-runningTime=1 #seconds
+runningTime=30 #seconds
 movingWindow=False
 #
 ###
@@ -58,8 +58,8 @@ def save(samples):
     os.mkdir(dirname)
     picpath=os.path.join(dirname,exerciseType+".png")
     plt.savefig(picpath)
-    pickle.dump(samples,open(dirname+"/"+filename+".p","wb"))
-    with open(dirname+"/"+filename+".csv","wb") as csvFile:
+    pickle.dump(samples,open(os.path.join(dirname,filename+".p"),"wb"))
+    with open(os.path.join(dirname,filename+".csv"),"wb") as csvFile:
         writer=csv.writer(csvFile)
         writer.writerow(["t (sec)","x","y","z"]) #header
         for i in samples:
@@ -71,18 +71,23 @@ def run(data):
     # update the data
     global movingWindow
     global t0
+    global samples
 
     # EXIT sceanario 
     if t0+runningTime<=time.time():
-        ser.close()
-        save(samples)
-
+        print conn_type
+        if conn_type != "archive": #Save only if not using archive data
+            ser.close()
+            save(samples)
+        else: print "Not saving because using archived data"
+        quit()
     t,x,y,z = data
     t=t-t0
     tdata.append(t)
     ydata.append(y)
     xdata.append(x)
     zdata.append(z)
+    samples.append((t,x,y,z))
     xmin, xmax = ax.get_xlim()
     if movingWindow==True:
         if t >= xmax-1: #once the line get's halfway...
@@ -98,8 +103,7 @@ def run(data):
 
 
 
-ani = animation.FuncAnimation(fig, run, acc_data, blit=False, interval=10,
-    repeat=False)
+ani = animation.FuncAnimation(fig, run, acc_data, blit=False, interval=10,repeat=False)
 
 
 # save a video of this animation

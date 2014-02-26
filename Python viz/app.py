@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.debug=True
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+device_data_generator=[]
 
 
 @app.route('/')
@@ -14,32 +15,37 @@ def index():
     return render_template('index.html')
 
 
-@socketio.on('my event', namespace='/test')
-def test_message(message):
-	print "what"
+@socketio.on('bluetooth_conn', namespace='/test')
+def bluetooth_conn():
+	global device_data_generator
+	print "user requested connection"
 	from hercubit import device
+	device_data_generator=device.acc_data()
+	emit('connection established')
+
+def get_data():
 	while True:
-		
-		# now=time.time()
-		sample=device.acc_data()
-		# print sample
-		session['receive_count'] = session.get('receive_count', 0) + 1
-		emit('my response', {'data': sample, 'count': session['receive_count']})
-		time.sleep(1)
+		sample=device_data_generator.next()
+		sample=str(sample)
+		print sample
+		emit('my response', {'data': sample})
+@socketio.on('get_sample', namespace='/test')
+def get_sample():
+	global device_data_generator
+	get_data()	
 
-@socketio.on('my broadcast event', namespace='/test')
-def test_message(message):
+
+@socketio.on('stop', namespace='/test')
+def test_message():
     # print message
-	session['receive_count'] = session.get('receive_count', 0) + 1
-	emit('my response',
-	     {'data': message['data'], 'count': session['receive_count']},
-	     broadcast=True)
+	# session['receive_count'] = session.get('receive_count', 0) + 1
+	emit('Bluetooth Connection Stopped')
 
 
-
-@socketio.on('connect', namespace='/test')
+@socketio.on('web_socket_connected', namespace='/test')
 def test_connect():
-    emit('my response', {'data': 'Connected'})
+	print "connected"
+	emit('connect', {'data': 'Connected'})
 
 
 @socketio.on('disconnect', namespace='/test')
