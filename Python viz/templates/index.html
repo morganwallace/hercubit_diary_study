@@ -7,16 +7,12 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function(){
             var connected = false;
+            var samples = {};
             var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
             
 
-            // function get_samples(){
-            //     socket.emit('get_sample');
-
-            // }
-
             //Receivers for Web Sockets
-            socket.on('my response', function(msg) {
+            socket.on('device response', function(msg) {
                 $('#log').append('<p>Accelerometer data: ' + msg.data + '</p>');
             });
             socket.on('connection established', function(msg) {

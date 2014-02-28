@@ -23,12 +23,14 @@ def bluetooth_conn():
 	device_data_generator=device.acc_data()
 	emit('connection established')
 
+# Retrieve the data from device
 def get_data():
 	while True:
 		sample=device_data_generator.next()
 		sample=str(sample)
 		print sample
-		emit('my response', {'data': sample})
+		emit('data response', {'data': sample})
+
 @socketio.on('get_sample', namespace='/test')
 def get_sample():
 	global device_data_generator
