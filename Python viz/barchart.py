@@ -115,13 +115,14 @@ def detect_rep():
                     peak, dip,range_z=sample[dominant_axis],sample[dominant_axis], 0
         prev_slope=y_slope
         
-
+sensor_data_generator=device.acc_data()
 def main():
     global data
     global sampleRate
     global max_rep_window
     global reps
     global all_reps
+
 
     #loops forever
     while True:
@@ -130,7 +131,7 @@ def main():
             del data[0]
             
         #Get time, x, y, and z from serial port
-        data.append(device.acc_data())
+        data.append(sensor_data_generator.next())
         # print data
         if data:
             # last_read=time.time()

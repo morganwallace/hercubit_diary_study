@@ -17,7 +17,7 @@ t0=time.time()
     # else: yield data_gen()
 # data_gen.t = 0
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(3, sharex=True)
 lineX, = ax.plot([], [],"r-", lw=2)
 lineY, = ax.plot([], [],"g-", lw=2)
 lineZ, = ax.plot([], [],"b-", lw=2)
