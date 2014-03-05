@@ -45,48 +45,36 @@ def sensor_stream(sensor="all"):
     while t0+sampleRate>time():
         sleep(sampleRate)
     t0=time()
-    while True:
-        if conn_type =="archive":
+    if conn_type =="archive":
+        for line in ser:
             sleep(sampleRate/2) # simulate actual sample rate
             try:
-                sample= [float(i) for i in ser.readline().split(",")]
+                sample= [float(i) for i in line.split(",")]
             except:
-                ser.close()
-                quit()
+                yield None
             yield sample
-        else:
+    else:
+        while True:
             # Read a line from the serial port and convert it to a python dictioary object
-            sample =literal_eval(ser.readline())
-
+            try:
+                sample =literal_eval(ser.readline())
+                sample['time']=time()
+            except:
+                sample= {'accel':(0,0,0),'gyro':(0,0,0),'magnet':(0,0,0)}            
             # If just one sensor type is requested...
             if sensor !="all": # sensor could be 'accel', 'gyro', or 'magnet'
-                sample = list(sample[sensor])
-                sample.insert(0,time())
-            else:
-                sample['time']=time()
-            yield sample
-
-        # for i in range(len(sample)):
-        #     try: sample[i]=float(sample[i].strip())
-        #     except: yield None
-        # if len(sample)==3: #From Device, Acc only
-        #     t=time()
-        # elif len(sample)==4: # from backup file
-        #     t=sample.pop(0)
-        #     sleep(sampleRate/2) # simulate actual sample rate
-        # else:
-        #     yield None
-        # x,y,z = sample[0], sample[1],sample[2]
-        # # print (t,x,y,z)
-        # yield t,x,y,z
+                yield list(sample[sensor])
+            else: 
+                yield sample
+            
 
 
 def run():
     """Use this code as the starting point 
     in scripts that import this module"""
-    l=sensor_stream('accel')
-    while True:        
-        print l.next()
+    sensor_generator=sensor_stream()
+    while True:    
+        print sensor_generator.next()
 
 if __name__ == '__main__':
     run()

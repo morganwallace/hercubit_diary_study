@@ -81,7 +81,7 @@ except:
 # Note : Morgan's bluetooth pairing code is '1234'
 
 ######  Peak Detection Preference Variables  ######
-sampleRate=.1 #this should match the rate from the code on Arduino
+sampleRate=.100 #this should match the rate from the code on Arduino
 max_rep_window=5 #seconds
 min_rep_window=.4 #seconds
 initialize_time=1 #second
