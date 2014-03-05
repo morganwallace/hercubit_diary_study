@@ -67,7 +67,7 @@ void loop()
   // Find yours here: http://www.magnetic-declination.com/
   // Mine is: 2� 37' W, which is 2.617 Degrees, or (which we need) 0.0456752665 radians, I will use 0.0457
   // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  float declinationAngle = 0.0457;
+  float declinationAngle = 0.242;
   heading += declinationAngle;
   
   // Correct for when signs are reversed.
@@ -113,4 +113,5 @@ void Output(MagnetometerRaw raw, MagnetometerScaled scaled, float heading, float
    Serial.print(" Radians   \t");
    Serial.print(headingDegrees);
    Serial.println(" Degrees   \t");
+   delay (300);
 }

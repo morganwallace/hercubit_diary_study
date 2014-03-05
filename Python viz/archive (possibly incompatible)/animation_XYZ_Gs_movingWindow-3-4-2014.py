@@ -22,7 +22,7 @@ lineX, = ax.plot([], [],"r-", lw=2)
 lineY, = ax.plot([], [],"g-", lw=2)
 lineZ, = ax.plot([], [],"b-", lw=2)
 
-ax.set_ylim(-1.1, 1.1)
+ax.set_ylim(-2, 2)
 ax.set_xlim(0, 10)
 ax.grid()
 ax.set_xlabel('time (s)')
