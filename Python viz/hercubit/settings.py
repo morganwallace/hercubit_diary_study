@@ -57,7 +57,7 @@ except:
 	from time import sleep
 	# sleep(1)
 	if os.getcwd()[os.getcwd().rfind("/"):] == "/hercubit":
-		archive=os.path.join("..","saved_animations_and_data")
+		archive=os.path.join("..","saved_animations_and_data","backup")
 	else:
 		archive=os.path.join("saved_animations_and_data")
 	for arch_folder in os.listdir(archive):
@@ -74,7 +74,7 @@ except:
 					#break out of for loops, just getting the first csv file
 					break
 			break
-	type(ser)
+	# type(ser)
 ####
 
 
