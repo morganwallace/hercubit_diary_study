@@ -71,32 +71,32 @@ void loop(){
 	fXg = Xg * alpha + (fXg * (1.0 - alpha));
 	fYg = Yg * alpha + (fYg * (1.0 - alpha));
 	fZg = Zg * alpha + (fZg * (1.0 - alpha));
-        Serial.print("{'accel':(");
+//        Serial.print("{'accel':(");
         Serial.print(fXg);
         Serial.print(",");
         Serial.print(fYg);
         Serial.print(",");
         Serial.print(fZg);
         Serial.print(")");
-        
-        gyro.read();
-        Serial.print(",'gyro':(");
-        Serial.print((int)gyro.g.x);
-        Serial.print(",");
-        Serial.print((int)gyro.g.y);
-        Serial.print(",");
-        Serial.print((int)gyro.g.z);
-        Serial.print(")");
-        
-        MagnetometerScaled scaled = compass.ReadScaledAxis();
-        Serial.print(",'magnet':(");
-        Serial.print(scaled.XAxis);
-        Serial.print(",");   
-        Serial.print(scaled.YAxis);
-        Serial.print(",");   
-        Serial.print(scaled.ZAxis);
-        Serial.print(")}");
-        
+//        
+//        gyro.read();
+//        Serial.print(",'gyro':(");
+//        Serial.print((int)gyro.g.x);
+//        Serial.print(",");
+//        Serial.print((int)gyro.g.y);
+//        Serial.print(",");
+//        Serial.print((int)gyro.g.z);
+//        Serial.print(")");
+//        
+//        MagnetometerScaled scaled = compass.ReadScaledAxis();
+//        Serial.print(",'magnet':(");
+//        Serial.print(scaled.XAxis);
+//        Serial.print(",");   
+//        Serial.print(scaled.YAxis);
+//        Serial.print(",");   
+//        Serial.print(scaled.ZAxis);
+//        Serial.print(")}");
+//        
         Serial.println();   
         
         
