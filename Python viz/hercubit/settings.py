@@ -7,6 +7,7 @@ conn_type=""
 ####  #Serial Connection
 # bluetooth
 global ser
+print serial.tools.list_ports()
 if system()== 'Darwin': # Mac OSX
 	
 	### FIRST TRY USB
@@ -24,12 +25,17 @@ if system()== 'Darwin': # Mac OSX
 		try:
 			#Bluetooth
 			print "Attempting to connect to bluetooth...\n"
-			SERIAL_PORT='/dev/tty.OpenPilot-BT-DevB'
-
+			SERIAL_PORTS=['/dev/tty.HC-06-DevB-1','/dev/tty.OpenPilot-BT-DevB','/dev/tty.HC-06-DevB']
 			SERIAL_SPEED=57600
-			ser = serial.Serial(SERIAL_PORT, SERIAL_SPEED)
-			print"\nBluetooth Connected!"
-			conn_type="bluetooth"
+			for port in SERIAL_PORTS:
+				try:
+					ser = serial.Serial(port, SERIAL_SPEED)
+					print"\nBluetooth Connected!"
+					conn_type="bluetooth"
+					SERIAL_PORT=port
+					break
+				except:
+					pass
 		except:
 			pass
 
@@ -74,11 +80,9 @@ except:
 					#break out of for loops, just getting the first csv file
 					break
 			break
-	# type(ser)
-####
 
 
-# Note : Morgan's bluetooth pairing code is '1234'
+# Note : bluetooth pairing code is '1234'
 
 ######  Peak Detection Preference Variables  ######
 sampleRate=.100 #this should match the rate from the code on Arduino

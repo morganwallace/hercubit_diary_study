@@ -4,7 +4,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import pickle
+import cPickle as pickle
 from os.path import join
 import os
 import csv
@@ -14,13 +14,13 @@ from hercubit.device import sensor_stream
 # filename=join("labeled_data",raw_input("name this training set: "))
 samples=[]
 
-t0=time.time()
+
     # else: yield data_gen()
 # data_gen.t = 0
 
 
 
-userName="Charles"
+userName="Lazar"
 # userName= raw_input("userName: ")
 exerciseType="shoulder"
 
@@ -82,9 +82,7 @@ def save(all_data,tdata):
     #samples should equal list of tuples of the data
     samples=[]
     for i in range(len(tdata)):
-        row=[]
-        for i in (userName,exerciseType,0):
-            row.append(i)
+        row = [userName,exerciseType,0]
         row.append(tdata[i])
         for sensor in sensors:
             for axis in axes:
@@ -106,12 +104,10 @@ def save(all_data,tdata):
     settings.ser.close()
     quit()
 
-
-
-
-# test=0
+t0=0
 def run(data):
     global t0, lines, test
+    if t0==0: t0=time.time()
     # print data
     #override t to be count of seconds
     t=time.time()-t0

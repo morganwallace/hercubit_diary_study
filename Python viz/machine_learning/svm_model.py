@@ -1,3 +1,7 @@
-import saved_data
+# import saved_data
+import sklearn
+import pickle 
 
-dataset=saved_data.get_all()
+dataset=pickle.load(open('all_samples.p','rb'))
+print dataset[0]
+##### INCOMPLETE

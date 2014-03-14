@@ -1,7 +1,7 @@
 import os
-import pickle
+import cPickle as pickle
 
-def get_all():
+def get_all(pickled=False, get_columns_only=False):
 	all_data=[]
 	labels=[]
 	dir_name=os.path.join('..','saved_animations_and_data')
@@ -13,7 +13,10 @@ def get_all():
 			with open(csv_file) as f:
 				if labels==[]:
 					labels=[label.strip()  for label in f.readline().split(",")]
-					print labels
+					
+					#override the default behavior and return just the labels
+					if get_columns_only==True: 
+						return labels
 				else:
 					f.readline()#get rid of the header row
 				for line in f:
@@ -21,8 +24,11 @@ def get_all():
 					row[2]=int(row[2])
 					row[3:]=[float(i) for i in row[3:]]
 					all_data.append(row)
+	if pickled==True:
+		pickle.dump(all_data,open("all_samples.p","wb"))
 	return all_data
 
 
 if __name__ == '__main__':
-	get_all()
+	# get_all()
+	get_all(pickled=True)
