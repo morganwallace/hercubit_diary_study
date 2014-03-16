@@ -1,0 +1,122 @@
+body {
+	background: #F6F6F6;
+	font-family: Lato-light;
+	margin: 0;
+}
+h1,h2,h3,h4 {
+	/*font-family: Lato-light;*/
+}
+
+header {
+	background: #4A90E2;
+	height: 80px;
+}
+
+/* section */
+section {
+	float: left;
+}
+section.metadata {
+	/*background: #F0F;*/
+	width: 30%;
+}
+section.main {
+	/*background: #F00;*/
+	width: 40%;
+}
+section.social {
+	/*background: #0FF;*/
+	width: 30%;
+}
+
+/* div */
+div.header-action {
+	float: right;
+}
+/* for general background & border */
+div.card {
+	border-radius: 1px;
+	background: #FFFFFF;
+	margin: 30px;
+	margin-bottom: 0;
+	-moz-box-shadow:    0px 1px 3px 0px #D4D4D4;
+	-webkit-box-shadow: 0px 1px 3px 0px #D4D4D4;
+	box-shadow:         0px 1px 3px 0px #D4D4D4;
+}
+div.lines {
+	-moz-box-shadow:    0px 1px 0px 0px #F0F0F0;
+	-webkit-box-shadow: 0px 1px 0px 0px #F0F0F0;
+	box-shadow:         0px 1px 0px 0px #F0F0F0;
+}
+div.lines:hover {
+	background: #E6F2FF;
+}
+
+/* for achievements */
+div.achievement .icon {
+	float: left;
+	margin: 30px;
+}
+div.achievement .desc {
+	float: left;
+}
+
+/* for main */
+div.main-action {
+	margin: auto;
+	margin-top: 200px;
+	text-align: center;
+}
+div.button {
+	border-radius: 3px;
+	background: #4A90E2;
+	-moz-box-shadow:    0px 1px 3px 0px #D4D4D4;
+	-webkit-box-shadow: 0px 1px 3px 0px #D4D4D4;
+	box-shadow:         0px 1px 3px 0px #D4D4D4;
+}
+div.button#startbtn {
+	margin: auto;
+	width: 204px;
+	height: 47px;
+}
+
+/* for goal */
+div.goal .num {
+	float: left;
+	margin: 30px;
+}
+div.goal .desc {
+	float: left;
+	padding-top: 30px;
+}
+div.goal .edit {
+	padding-top: 30px;
+	padding-right: 30px;
+	float: right;
+}
+
+/* for friend */
+div.friend .num {
+	float: left;
+	margin: 30px;
+}
+div.friend .icon {
+	float: left;
+	padding-top: 15px;
+}
+div.friend .desc {
+	float: left;
+	padding-top: 30px;
+	padding-left: 15px;
+}
+
+/*clearfix*/
+.clear:before,
+.clear:after {
+    content: " ";
+    display: table;
+}
+
+.clear:after {
+    clear: both;
+}
