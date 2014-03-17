@@ -8,16 +8,19 @@
     </head>
     <body>
         <header>
-            <div>Hercubit</div>
-            <div class="header-action"><img src="img/kate.png">Kate</div>
-            <div class="header-action"><img src="img/challenge.png"></div>
-            <div class="header-action"><img src="img/setting.png"></div>
+            <div class="header-logo">Hercubit</div>
+            <div class="header-action">
+                <img src="img/kate.png">
+                <img src="img/challenge.png">
+                <img src="img/setting.png">
+            </div>
         </header>
 
-        <section class="metadata">
+        <!-- Left side: metadata -->
+        <section class="metadata" data-state="neutral">
             <!-- Graph -->
             <div class="card">
-                <img src="img/gridview.png">
+                <img src="img/gridview.png" style="width:100%;">
             </div>
 
             <!-- Achievements -->
@@ -46,35 +49,42 @@
             </div>
         </section>
 
+        <!-- Middle: Main -->
         <section class="main">
             <div class="main-action">
-                <h1>Goal 1: 10 curls</h1>
-                <div class="button" id="startbtn">Start</div>
+                <div>
+                    <span class="span-36 span-regular">Goal 1: 10 curls</span>
+                </div>
+                <div id="count" data-state="neutral">
+                    <span class="span-288 ">2</span>
+                    <span class="span-36 span-regular">/10</span>
+                </div>
+                <div class="button span-24" id="startbtn">Start</div>
             </div>
-            <div class="card">
-                <div class="goal lines clear">
+            <div class="card" data-state="neutral">
+                <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 1</div>
                     <div class="desc">10 curls</div>
                     <div class="edit"><img src="img/edit.png"></div>
                 </div>
-                <div class="goal lines clear">
+                <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 2</div>
                     <div class="desc">10 curls + 10 pushups</div>
                     <div class="edit"><img src="img/edit.png"></div>
                 </div>
-                <div class="goal lines clear">
+                <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 3</div>
                     <div class="desc">20 curls + 20 pushups</div>
                     <div class="edit"><img src="img/edit.png"></div>
                 </div>
-                <div class="goal lines clear">
+                <div class="goal lines clear" data-state="neutral">
                     <div class="num">+</div>
                     <div class="desc">Add New Goal</div>
                 </div>
             </div>
         </section>
 
-        <section class="social">
+        <section class="social" data-state="neutral">
             <div class="card">
                 <div class="friend lines clear">
                     <div class="num">1</div>
