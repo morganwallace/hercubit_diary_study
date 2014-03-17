@@ -1,7 +1,8 @@
 import os
 import cPickle as pickle
+import csv
 
-def get_all(pickled=False, get_columns_only=False):
+def get_all(pickled=False, get_columns_only=False, to_csv=False):
 	all_data=[]
 	labels=[]
 	dir_name=os.path.join('..','saved_animations_and_data')
@@ -26,9 +27,14 @@ def get_all(pickled=False, get_columns_only=False):
 					all_data.append(row)
 	if pickled==True:
 		pickle.dump(all_data,open("all_samples.p","wb"))
+	if to_csv== True:
+		with open("all_samples.csv",'wb') as output_csv:
+			writer=csv.writer(output_csv)
+			for line in all_data:
+				writer.writerow(line)
 	return all_data
 
 
 if __name__ == '__main__':
 	# get_all()
-	get_all(pickled=True)
+	get_all(pickled=True, to_csv=True)
