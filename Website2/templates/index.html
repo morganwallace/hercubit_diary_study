@@ -4,15 +4,15 @@
         <meta charset="utf-8">
         <title>Hercubit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="../static/css/style.css">
     </head>
     <body>
         <header>
             <div class="header-logo">Hercubit</div>
             <div class="header-action">
-                <img src="img/kate.png">
-                <img src="img/challenge.png">
-                <img src="img/setting.png">
+                <img src="../static/img/kate.png">
+                <img src="../static/img/challenge.png">
+                <img src="../static/img/setting.png">
             </div>
         </header>
 
@@ -20,27 +20,27 @@
         <section class="metadata" data-state="neutral">
             <!-- Graph -->
             <div class="card">
-                <img src="img/gridview.png" style="width:100%;">
+                <img src="../static/img/gridview.png" style="width:100%;">
             </div>
 
             <!-- Achievements -->
             <div class="card clear">
                 <div class="achievement lines clear">
-                    <div class="icon"><img src="img/elephant.png"></div>
+                    <div class="icon"><img src="../static/img/elephant.png"></div>
                     <div class="desc">
                         <h1>Weight</h1>
                         <h4>1500 lbs</h4>
                     </div>
                 </div>
                 <div class="achievement lines clear">
-                    <div class="icon"><img src="img/calories.png"></div>
+                    <div class="icon"><img src="../static/img/calories.png"></div>
                     <div class="desc">
                         <h1>Calories</h1>
                         <h4>16,315 cal</h4>
                     </div>
                 </div>
                 <div class="achievement lines clear">
-                    <div class="icon"><img src="img/badge.png"></div>
+                    <div class="icon"><img src="../static/img/badge.png"></div>
                     <div class="desc">
                         <h1>Treadmill Rat</h1>
                         <h4>Achieved 1000 miles</h4>
@@ -60,22 +60,23 @@
                     <span class="span-36 span-regular">/10</span>
                 </div>
                 <div class="button span-24" id="startbtn">Start</div>
+                <span id="debug-output"></span>
             </div>
             <div class="card" data-state="neutral">
                 <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 1</div>
                     <div class="desc">10 curls</div>
-                    <div class="edit"><img src="img/edit.png"></div>
+                    <div class="edit"><img src="../static/img/edit.png"></div>
                 </div>
                 <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 2</div>
                     <div class="desc">10 curls + 10 pushups</div>
-                    <div class="edit"><img src="img/edit.png"></div>
+                    <div class="edit"><img src="../static/img/edit.png"></div>
                 </div>
                 <div class="goal lines clear" data-state="neutral">
                     <div class="num">Goal 3</div>
                     <div class="desc">20 curls + 20 pushups</div>
-                    <div class="edit"><img src="img/edit.png"></div>
+                    <div class="edit"><img src="../static/img/edit.png"></div>
                 </div>
                 <div class="goal lines clear" data-state="neutral">
                     <div class="num">+</div>
@@ -88,28 +89,30 @@
             <div class="card">
                 <div class="friend lines clear">
                     <div class="num">1</div>
-                    <div class="icon"><img src="img/morgan.png"></div>
+                    <div class="icon"><img src="../static/img/morgan.png"></div>
                     <div class="desc">Accomplished 3 goals</div>
                 </div>
                 <div class="friend lines clear">
                     <div class="num">2</div>
-                    <div class="icon"><img src="img/kate.png"></div>
+                    <div class="icon"><img src="../static/img/kate.png"></div>
                     <div class="desc">Achieved 1500 lbs</div>
                 </div>
                 <div class="friend lines clear">
                     <div class="num">3</div>
-                    <div class="icon"><img src="img/shaohan.png"></div>
+                    <div class="icon"><img src="../static/img/shaohan.png"></div>
                     <div class="desc">Accomplished 2 goals</div>
                 </div>
                 <div class="friend lines clear">
                     <div class="num">4</div>
-                    <div class="icon"><img src="img/charles.png"></div>
+                    <div class="icon"><img src="../static/img/charles.png"></div>
                     <div class="desc">Accomplished 1 goals</div>
                 </div>
             </div>
         </section>
 
-        <script src="js/jquery-2.1.0.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="../static/js/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="../static/js/socket.io.min.js"></script>
+        <script src="../static/js/main.js"></script>
+        <script src="../static/js/websockets.js"></script>
     </body>
 </html>

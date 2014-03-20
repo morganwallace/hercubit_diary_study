@@ -21,7 +21,8 @@ def acc_data():
         for line in ser:
             sleep(sampleRate/2) # simulate actual sample rate
             try:
-                sample= [float(i) for i in line.split(",")]
+                s= [float(i) for i in line.split(",")]
+                formatted_sample= {'accel':(0,0,0),'gyro':(0,0,0),'magnet':(0,0,0)}  
             except:
                 yield None
             yield sample
@@ -33,8 +34,7 @@ def acc_data():
             yield tuple(sample)
 
 
-
-def sensor_stream(sensor="all"):
+def sensor_stream(sensor="all", simulate_sample_rate=True):
     """Generator for streaming sensor data.
     If the argument is 'all' then Acceleromater, Gyro, and Magetometer data are
     all returned.
@@ -45,14 +45,17 @@ def sensor_stream(sensor="all"):
     while t0+sampleRate>time():
         sleep(sampleRate)
     t0=time()
+    print conn_type
     if conn_type =="archive":
-        for line in ser:
-            sleep(sampleRate/2) # simulate actual sample rate
-            try:
-                sample= [float(i) for i in line.split(",")]
-            except:
-                yield None
-            yield sample
+        archive_data.readline()
+        while True:
+            line=archive_data.readline()
+            if line is not None:
+                if simulate_sample_rate==True: sleep(sampleRate) # simulate actual sample rate
+                s= [float(i) for i in line.split(",")[-10:]]
+                formatted_sample= {'time':s[0],'accel':(s[1],s[2],s[3]),'gyro':(s[4],s[5],s[6]),'magnet':(s[7],s[8],s[9])}
+                yield formatted_sample
+            else: break
     else:
         while True:
             # Read a line from the serial port and convert it to a python dictioary object

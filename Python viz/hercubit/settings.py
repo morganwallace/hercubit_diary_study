@@ -7,7 +7,7 @@ conn_type=""
 ####  #Serial Connection
 # bluetooth
 global ser
-print serial.tools.list_ports()
+# print serial.tools.list_ports()
 if system()== 'Darwin': # Mac OSX
 	
 	### FIRST TRY USB
@@ -60,26 +60,19 @@ except:
 	# import pickle
 	print "\nNo serial connection available. Falling back on archived data..."
 	conn_type="archive"
-	from time import sleep
-	# sleep(1)
-	if os.getcwd()[os.getcwd().rfind("/"):] == "/hercubit":
-		archive=os.path.join("..","saved_animations_and_data","backup")
+	backup_path=os.path.join('Python viz','saved_animations_and_data','backup','2014-03-14__15-36-14_bicep curl.csv')
+	if os.getcwd()[os.getcwd().rfind('/'):]=='/Website2':	
+		archive=os.path.join(os.path.dirname(os.getcwd()),backup_path)
+		archive_data=open(archive)
 	else:
-		archive=os.path.join("saved_animations_and_data")
-	for arch_folder in os.listdir(archive):
-		if arch_folder[0] != ".":
-			selected_archive=os.path.join(archive, arch_folder)
-			for arch_file in os.listdir(selected_archive):
-				if arch_file[-4:]==".csv": # if you find a python pickle file
-					pickled_file=os.path.join(selected_archive,arch_file)
-					print "using archive file: "+pickled_file+"\n"
-					# sleep(1)
-					ser = open(pickled_file)
-					ser.readline()
-					
-					#break out of for loops, just getting the first csv file
-					break
-			break
+		archive=os.getcwd()
+		while archive[archive.rfind('/'):] != '/Fitness-Tracking':
+			archive=os.path.dirname(archive)
+			
+		archive=os.path.join(archive,backup_path)
+		archive_data=open(archive)
+	print archive
+
 
 
 # Note : bluetooth pairing code is '1234'

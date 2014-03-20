@@ -20,9 +20,9 @@ samples=[]
 
 
 
-userName="Lazar"
+userName="AJ"
 # userName= raw_input("userName: ")
-exerciseType="shoulder"
+exerciseType="bicep curls"
 
 
 

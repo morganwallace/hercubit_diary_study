@@ -39,7 +39,7 @@ for i in range(len(axes)):
     ax[i].grid()
     ax[i].set_xlim(0, 20)
 
-ax[0].set_ylim(-2, 8)
+ax[0].set_ylim(-2, 2)
 ax[1].set_ylim(-30000, 30000)
 ax[2].set_ylim(-2000, 2000)
 

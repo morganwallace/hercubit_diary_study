@@ -58,7 +58,7 @@ void setup() {
     
     
 //        Serial.println("start");
-	delay(500);
+//	delay(500);
 }
 
 
