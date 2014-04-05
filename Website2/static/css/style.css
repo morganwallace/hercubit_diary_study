@@ -3,8 +3,8 @@ html, body {
 	font-family: "Lato-light";
 	margin: 0;
 	max-width: 100%;
-	max-height: 1200px;
-	overflow: hidden;
+	max-height: 1300px;
+	/*overflow: hidden;*/
 }
 
 header {
@@ -250,6 +250,9 @@ div.goal .edit[data-state="hover"] {
 }
 
 /* for friend */
+div.friend {
+	height: 80px;
+}
 div.friend .num {
 	float: left;
 	margin: 30px;
@@ -261,6 +264,12 @@ div.friend .icon {
 div.friend .desc {
 	float: left;
 	padding-top: 30px;
+	padding-left: 15px;
+}
+div.friend .menu {
+	display: none;
+	float: left;
+	padding-top: 45px;
 	padding-left: 15px;
 }
 

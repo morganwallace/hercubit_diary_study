@@ -77,7 +77,7 @@ $(document).ready(function () {
     /************************************************************************/
 
     // TODO: Get activity freq from database
-    var activityArray = [0,1,2,0,0,1,1,3,3,2,0,0,0,0,0];
+    var activityArray = [0,1,2,0,0,1,1, 3,3,2,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0];
     // var activityArray = [0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0];
 
     for (var i=1; i<activityArray.length+1; i++) {
@@ -85,7 +85,21 @@ $(document).ready(function () {
         $("#activity-map").append(code);
         $("#code-"+i).addClass("level-"+activityArray[i-1]);
     }
-    
+
+
+    /* Friends */
+    /************************************************************************/
+    $("html").on("click", function(){
+        $("div.friend").css("height", "80px");
+        $("div.friend").find("div.menu").hide();
+    })
+    $("div.friend").on("click", function(e){
+        e.stopPropagation();
+        $("div.friend").css("height", "80px");
+        $("div.friend").find("div.menu").hide();
+        $(this).css("height","160px");
+        $(this).find("div.menu").show();
+    });
 
 });
 
