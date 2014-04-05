@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    /* Start */
+    /************************************************************************/
+
 	// Click Start to see count
 	$("#startbtn").on('click', function(){
 		if ($("section.metadata").attr('data-state') === 'neutral') {
@@ -19,6 +23,21 @@ $(document).ready(function () {
         }
 	});
 
+    /* Goal */
+    /************************************************************************/
+
+    // TODO: Loop through database to get goals
+    var goalArray = ["10 curls", "10 curls + 10 pushups"];
+
+    // Get goals from the database
+    for (var i=1; i<goalArray.length+1; i++) {
+        $("section.main div.card div#add-goal").before('<div class="goal lines clear" data-state="neutral" id="goal-'+i+'"><div class="num">Goal '+i+'</div><div class="desc">'+goalArray[i-1]+'</div><div class="edit"><img src="../static/img/edit.png"></div></div>');
+    };
+    // Set the number for new goal
+    var goalArrayAddone = goalArray.length+1;
+    $("#modal-window h1").text("Goal "+ goalArrayAddone);
+
+
 	// Hover goal to see edit button
 	$("div.goal").hover(
 		function() {
@@ -28,4 +47,65 @@ $(document).ready(function () {
 			$(this).children(".edit").attr('data-state', 'neutral');
 		}
 	);
+    // Click to choose the goal
+    $("div.goal").on('click', function(){
+        if (this.id!=="add-goal") {
+            $("#chosen-goal span").text($(this).find('div.num').text() +": "+ $(this).find('div.desc').text());
+        }
+    });
+
+    // Pop up Modal after clicking on Add goal
+    $("#add-goal").on('click', function(){
+        $("#modal-overlay").show();
+        $("#modal-window").show();
+    });
+    $("#modal-overlay").on('click', function(){
+        $("#modal-overlay").hide();
+        $("#modal-window").hide();
+    });
+    $("#modal-add-goal").submit(function(e){
+        $("#modal-overlay").hide();
+        $("#modal-window").hide();
+
+        // TODO: update database & refresh this page to show new goal list
+
+        e.preventDefault();
+    });
+
+
+
+    
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
