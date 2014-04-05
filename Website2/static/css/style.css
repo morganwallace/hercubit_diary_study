@@ -265,9 +265,26 @@ div.friend .desc {
 }
 
 /* for activity */
-div#activity-map #code {
-	width: 10px;
-	height: 10px;
+div#activity-map {
+	padding: 0 10px;
+}
+div#activity-map .code {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin: 2px;
+}
+div#activity-map .code.level-0 {
+	background-color: #eee;
+}
+div#activity-map .code.level-1 {
+	background-color: #DBE089;
+}
+div#activity-map .code.level-2 {
+	background-color: #9CBF66;
+}
+div#activity-map .code.level-3 {
+	background-color: #386323;
 }
 
 /*clearfix*/

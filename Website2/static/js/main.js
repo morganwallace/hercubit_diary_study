@@ -73,7 +73,18 @@ $(document).ready(function () {
     });
 
 
+    /* Activity */
+    /************************************************************************/
 
+    // TODO: Get activity freq from database
+    var activityArray = [0,1,2,0,0,1,1,3,3,2,0,0,0,0,0];
+    // var activityArray = [0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0];
+
+    for (var i=1; i<activityArray.length+1; i++) {
+        var code = '<div class="code" id="code-'+i+'"></div>';
+        $("#activity-map").append(code);
+        $("#code-"+i).addClass("level-"+activityArray[i-1]);
+    }
     
 
 });
