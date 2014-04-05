@@ -7,9 +7,17 @@
 		<link rel="stylesheet" href="../static/css/style.css">
     </head>
     <body>
+        <header>
+            <div class="header-logo">Hercubit</div>
+            <div class="header-action">
+                <img src="../static/img/kate.png">
+                <img src="../static/img/challenge.png">
+                <img src="../static/img/setting.png">
+            </div>
+        </header>
         <!-- Put Modal window here for later use -->
         <div id="modal-overlay"></div>
-        <div id="modal-window" class="card">
+        <div id="modal-goal" class="card">
             <h1></h1>
             <form id="modal-add-goal">
                 <p>Bisep curl: <input type="number" name="bisep-number" value="0" min="0" max="20"></p>
@@ -19,14 +27,25 @@
             </form>
         </div>
 
-        <header>
-            <div class="header-logo">Hercubit</div>
-            <div class="header-action">
-                <img src="../static/img/kate.png">
-                <img src="../static/img/challenge.png">
-                <img src="../static/img/setting.png">
-            </div>
-        </header>
+        <!-- ######################################## First time use ##################################### -->
+
+        <div id="white-overlay"></div>
+        <div id="signup-form" class="card">
+            <form id="signup">
+                <p>
+                    <label>Email:</label>
+                    <input type="email" name="signup-email">
+                </p>
+                <p>
+                    <label>Avatar</label>
+                    <input type="file" name="signup-avatar">
+                </p>
+                <input type="submit">
+            </form>
+        </div>
+
+        <!-- ############################################################################################# -->
+
 
         <!-- Left side: metadata -->
         <section class="metadata" data-state="neutral">

@@ -1,5 +1,24 @@
 $(document).ready(function () {
 
+    /* If first time use */
+    /************************************************************************/
+
+    // TODO: set cookie to detect if it's first time use
+    var firstTimeUse = 1;
+    
+    if (firstTimeUse) {
+        $("header div.header-action").hide();
+        $("#white-overlay").show();
+        $("#signup-form").show();
+    }
+
+    $("#signup").submit(function(e){
+        $("#white-overlay").hide();
+        $("#signup-form").hide();
+        $("header div.header-action").show();
+        e.preventDefault();
+    });
+
     /* Start */
     /************************************************************************/
 
@@ -35,7 +54,7 @@ $(document).ready(function () {
     };
     // Set the number for new goal
     var goalArrayAddone = goalArray.length+1;
-    $("#modal-window h1").text("Goal "+ goalArrayAddone);
+    $("#modal-goal h1").text("Goal "+ goalArrayAddone);
 
 
 	// Hover goal to see edit button
@@ -57,15 +76,15 @@ $(document).ready(function () {
     // Pop up Modal after clicking on Add goal
     $("#add-goal").on('click', function(){
         $("#modal-overlay").show();
-        $("#modal-window").show();
+        $("#modal-goal").show();
     });
     $("#modal-overlay").on('click', function(){
         $("#modal-overlay").hide();
-        $("#modal-window").hide();
+        $("#modal-goal").hide();
     });
     $("#modal-add-goal").submit(function(e){
         $("#modal-overlay").hide();
-        $("#modal-window").hide();
+        $("#modal-goal").hide();
 
         // TODO: update database & refresh this page to show new goal list
 
