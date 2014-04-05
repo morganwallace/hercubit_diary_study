@@ -108,6 +108,16 @@ $(document).ready(function () {
 
     /* Friends */
     /************************************************************************/
+    // TODO: Loop through database to get friend list
+    var friendArray = ["Morgan", "Charles", "Shaohan", "Kate"];
+    var friendDesc = ["Accomplished 3 goals", "Achieved 1500 lbs", "Accomplished 2 goals", "Accomplished 1 goals"]
+
+    // Get goals from the database
+    for (var i=1; i<friendArray.length+1; i++) {
+        $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button>Message</button><button>Challenge</button></div></div>');
+    };
+
+
     $("html").on("click", function(){
         $("div.friend").css("height", "80px");
         $("div.friend").find("div.menu").hide();
