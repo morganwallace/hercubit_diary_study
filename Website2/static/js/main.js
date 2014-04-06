@@ -3,6 +3,7 @@ var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","","","","","
 
 $(document).ready(function () {
 
+    // queryDatabase();
     /* If first time use */
     /************************************************************************/
 
@@ -55,22 +56,28 @@ $(document).ready(function () {
 
     // Get goals from the database
     for (var i=1; i<goalArray.length+1; i++) {
-        $("section.main div.card div#add-goal").before('<div class="goal lines clear" data-state="neutral" id="goal-'+i+'"><div class="num">Goal '+i+'</div><div class="desc">'+goalArray[i-1]+'</div><div class="edit"><img src="../static/img/edit.png"></div></div>');
+        $("section.main div.card div#add-goal").before('<div class="goal lines clear" data-state="neutral" id="goal-'+i+'"><div class="num">Goal '+i+'</div><div class="desc">'+goalArray[i-1]+'</div><div class="trash"><img src="../static/img/trash.png"></div></div>');
     };
     // Set the number for new goal
     var goalArrayAddone = goalArray.length+1;
     $("#modal-goal h1").text("Goal "+ goalArrayAddone);
 
 
-	// Hover goal to see edit button
+	// Hover goal to see trash button
 	$("div.goal").hover(
 		function() {
-			$(this).children(".edit").attr('data-state', 'hover');
+			$(this).children(".trash").attr('data-state', 'hover');
 		},
 		function() {
-			$(this).children(".edit").attr('data-state', 'neutral');
+			$(this).children(".trash").attr('data-state', 'neutral');
 		}
 	);
+    // Click to delete the goal
+    $("div.goal .trash").on('click', function(){
+        // console.log($(this).parent()[0].id);
+        $(this).parent()[0].remove();
+        // TODO: Delete this goal from database
+    });
     // Click to choose the goal
     $("div.goal").on('click', function(){
         if (this.id!=="add-goal") {
@@ -159,7 +166,20 @@ function getNewbadge (num) {
     $("#modal-badge").show();
 }
 
+function queryDatabase () {
+    var q = "SELECT 'username' FROM 1OBObNVqy3kHdpdDaGaC1xH5sfmGWb-oGBNfosOMo";
+    var queryText = encodeURI(q);
+    var query = "https://www.googleapis.com/fusiontables/v1/query?sql=" + queryText + "&key=AIzaSyA8juHC7LiH4pY4HM3XPIUTuFFt6y2jWqU";
 
+    $.ajax({
+        type: "GET",
+        url: query,
+        success: function(data){
+            console.log("succcccess");
+            console.log(data);
+        }
+    });
+}
 
 
 

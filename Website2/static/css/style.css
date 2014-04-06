@@ -266,18 +266,18 @@ div.goal .desc {
 	float: left;
 	padding-top: 30px;
 }
-div.goal .edit {
+div.goal .trash {
 	visibility: hidden;
 	opacity: 0;
 	padding-top: 30px;
 	padding-right: 30px;
 	float: right;
 }
-div.goal .edit[data-state="neutral"] {
+div.goal .trash[data-state="neutral"] {
 	visibility: hidden;
 	opacity: 0;
 }
-div.goal .edit[data-state="hover"] {
+div.goal .trash[data-state="hover"] {
 	visibility: visible;
 	opacity: 1;
 }
