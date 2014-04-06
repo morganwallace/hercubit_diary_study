@@ -8,6 +8,7 @@ hercubit_path=os.path.join(os.path.dirname(os.getcwd()),'Python viz')
 sys.path.append(hercubit_path)
 import hercubit
 
+
 app = Flask(__name__)
 app.debug=True
 app.config['SECRET_KEY'] = 'secret!'
@@ -31,6 +32,7 @@ def bluetooth_conn():
 	DEVICE_CONNECTED=True
 
 	from hercubit import device
+	
 	device_data_generator=device.sensor_stream()#simulate_sample_rate=False
 	from hercubit.settings import sampleRate
 	emit('connection established',{'sample_rate': sampleRate*1000})
@@ -39,16 +41,26 @@ def bluetooth_conn():
 @socketio.on('get_sample', namespace='/test')
 @app.route('/getsample')
 def get_sample():
+	global device_data_generator
+	from hercubit import rep_tracker
 	if DEVICE_CONNECTED==True:
-		global device_data_generator
-		try:
-			sample=device_data_generator.next()
-		except:
-			stop()
-			return None
-		sample=str(sample)
-		print sample
-		emit('device response', {'data': sample})
+		sample=device_data_generator.next()
+		# print sample
+		count=rep_tracker.live_peaks(sample)
+		if count!=None:
+			# return count
+			emit('device response', {'data': count})
+			# stop()
+			# return None
+
+		# try:
+		# sample=device_data_generator.next()
+		# except:
+		# 	stop()
+		# 	return None
+		# sample=str(sample)
+		# print sample
+		
 
 
 
@@ -56,7 +68,9 @@ def get_sample():
 def stop():
 	global DEVICE_CONNECTED
 	DEVICE_CONNECTED=False
-	hercubit.settings.ser.close()
+	from hercubit.settings import ser
+	ser.close()
+	print "stopped"
 	emit('Bluetooth Connection Stopped')
 
 
@@ -72,4 +86,8 @@ def test_disconnect():
     
 
 if __name__ == '__main__':
+    import webbrowser
+    # webbrowser.open_new_tab('http://localhost:5000')
     socketio.run(app)
+    
+

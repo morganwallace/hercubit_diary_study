@@ -16,13 +16,18 @@ $(document).ready(function(){
         }, msg.sample_rate);
     });
     socket.on('device response', function(msg) {
-        $('#debug-output').html('<p>Accelerometer data: ' + msg.data + '</p>');
+        // $('#debug-output').html('<p>Accelerometer data: ' + msg.data + '</p>');
+        $("#count_numerator").html(msg.data)
     });
     socket.on('Bluetooth Connection Stopped', function(msg) {
         $('#log').append('<p>Bluetooth connection Stopped</p>');
     });
 
+    //
     //Triggers for Web Socket
+    //
+
+    //
     $('#startbtn').click(function(event) {
         if ($('#startbtn').html()=='Done'){
             socket.emit('bluetooth_conn');
