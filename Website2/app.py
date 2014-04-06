@@ -4,8 +4,8 @@ import time
 import os
 import sys
 #import hercubit module from Python viz directory
-hercubit_path=os.path.join(os.path.dirname(os.getcwd()),'Python viz')
-sys.path.append(hercubit_path)
+# hercubit_path=os.path.join(os.path.dirname(os.getcwd()),'Python viz')
+# sys.path.append(hercubit_path)
 import hercubit
 
 
