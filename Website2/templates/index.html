@@ -16,43 +16,59 @@
             </div>
         </header>
 
+        <!-- Put Modal window here for later use -->
+        <div id="modal-overlay"></div>
+        <div id="modal-goal" class="card">
+            <h1></h1>
+            <form id="modal-add-goal">
+                <p>Bisep curl: <input type="number" name="bisep-number" value="0" min="0" max="20"></p>
+                <p>Tricep curl: <input type="number" name="trisep-number" value="0" min="0" max="20"></p>
+                <p>Shoulder: <input type="number" name="shoulder-number" value="0" min="0" max="20"></p>
+                <p><input type="submit" value="Add"></p>
+            </form>
+        </div>
+        <div id="modal-badge" class="card">
+            <p>You got a new badge!</p>
+            <h1></h1>
+            <img src="">
+            <p><span></span></p>
+        </div>
+
+        <!-- ######################################## First time use ##################################### -->
+
+        <div id="white-overlay"></div>
+        <div id="signup-form" class="card">
+            <form id="signup">
+                <p>
+                    <label>Email:</label>
+                    <input type="email" name="signup-email">
+                </p>
+                <p>
+                    <label>Avatar</label>
+                    <input type="file" name="signup-avatar">
+                </p>
+                <input type="submit">
+            </form>
+        </div>
+
+        <!-- ############################################################################################# -->
+
+
         <!-- Left side: metadata -->
         <section class="metadata" data-state="neutral">
             <!-- Graph -->
-            <div class="card">
-                <img src="../static/img/gridview.png" style="width:100%;">
+            <div class="card" id="activity-map">
+                <p><span class="span-24 span-regular">April</span></p>
             </div>
 
             <!-- Achievements -->
-            <div class="card clear">
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/elephant.png"></div>
-                    <div class="desc">
-                        <h1>Weight</h1>
-                        <h4>1500 lbs</h4>
-                    </div>
-                </div>
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/calories.png"></div>
-                    <div class="desc">
-                        <h1>Calories</h1>
-                        <h4>16,315 cal</h4>
-                    </div>
-                </div>
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/badge.png"></div>
-                    <div class="desc">
-                        <h1>Treadmill Rat</h1>
-                        <h4>Achieved 1000 miles</h4>
-                    </div>
-                </div>
-            </div>
+            <div class="card clear" id="achievements"></div>
         </section>
 
         <!-- Middle: Main -->
         <section class="main">
             <div class="main-action">
-                <div>
+                <div id="chosen-goal">
                     <span class="span-36 span-regular">Goal 1: 10 curls</span>
                 </div>
                 <div id="count" data-state="neutral">
@@ -63,51 +79,16 @@
                 <span id="debug-output"></span>
             </div>
             <div class="card" data-state="neutral">
-                <div class="goal lines clear" data-state="neutral">
-                    <div class="num">Goal 1</div>
-                    <div class="desc">10 curls</div>
-                    <div class="edit"><img src="../static/img/edit.png"></div>
-                </div>
-                <div class="goal lines clear" data-state="neutral">
-                    <div class="num">Goal 2</div>
-                    <div class="desc">10 curls + 10 pushups</div>
-                    <div class="edit"><img src="../static/img/edit.png"></div>
-                </div>
-                <div class="goal lines clear" data-state="neutral">
-                    <div class="num">Goal 3</div>
-                    <div class="desc">20 curls + 20 pushups</div>
-                    <div class="edit"><img src="../static/img/edit.png"></div>
-                </div>
-                <div class="goal lines clear" data-state="neutral">
+                <div class="goal lines clear" data-state="neutral" id="add-goal">
                     <div class="num">+</div>
                     <div class="desc">Add New Goal</div>
                 </div>
             </div>
         </section>
 
+        <!-- Friend list -->
         <section class="social" data-state="neutral">
-            <div class="card">
-                <div class="friend lines clear">
-                    <div class="num">1</div>
-                    <div class="icon"><img src="../static/img/morgan.png"></div>
-                    <div class="desc">Accomplished 3 goals</div>
-                </div>
-                <div class="friend lines clear">
-                    <div class="num">2</div>
-                    <div class="icon"><img src="../static/img/kate.png"></div>
-                    <div class="desc">Achieved 1500 lbs</div>
-                </div>
-                <div class="friend lines clear">
-                    <div class="num">3</div>
-                    <div class="icon"><img src="../static/img/shaohan.png"></div>
-                    <div class="desc">Accomplished 2 goals</div>
-                </div>
-                <div class="friend lines clear">
-                    <div class="num">4</div>
-                    <div class="icon"><img src="../static/img/charles.png"></div>
-                    <div class="desc">Accomplished 1 goals</div>
-                </div>
-            </div>
+            <div class="card"></div>
         </section>
 
         <script src="../static/js/jquery-2.1.0.min.js"></script>
