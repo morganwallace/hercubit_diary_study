@@ -15,6 +15,7 @@
                 <img src="../static/img/setting.png">
             </div>
         </header>
+
         <!-- Put Modal window here for later use -->
         <div id="modal-overlay"></div>
         <div id="modal-goal" class="card">
@@ -25,6 +26,12 @@
                 <p>Shoulder: <input type="number" name="shoulder-number" value="0" min="0" max="20"></p>
                 <p><input type="submit" value="Add"></p>
             </form>
+        </div>
+        <div id="modal-badge" class="card">
+            <p>You got a new badge!</p>
+            <h1></h1>
+            <img src="">
+            <p><span></span></p>
         </div>
 
         <!-- ######################################## First time use ##################################### -->
@@ -50,37 +57,12 @@
         <!-- Left side: metadata -->
         <section class="metadata" data-state="neutral">
             <!-- Graph -->
-            <div class="card">
-                <!-- <img src="../static/img/gridview.png" style="width:100%;"> -->
-                <div id="activity-map">
-                    <p><span class="span-24 span-regular">April</span></p>
-                </div>
+            <div class="card" id="activity-map">
+                <p><span class="span-24 span-regular">April</span></p>
             </div>
 
             <!-- Achievements -->
-            <div class="card clear">
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/elephant.png"></div>
-                    <div class="desc">
-                        <h1>Weight</h1>
-                        <h4>1500 lbs</h4>
-                    </div>
-                </div>
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/calories.png"></div>
-                    <div class="desc">
-                        <h1>Calories</h1>
-                        <h4>16,315 cal</h4>
-                    </div>
-                </div>
-                <div class="achievement lines clear">
-                    <div class="icon"><img src="../static/img/badge.png"></div>
-                    <div class="desc">
-                        <h1>Treadmill Rat</h1>
-                        <h4>Achieved 1000 miles</h4>
-                    </div>
-                </div>
-            </div>
+            <div class="card clear" id="achievements"></div>
         </section>
 
         <!-- Middle: Main -->

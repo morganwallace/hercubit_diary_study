@@ -45,7 +45,17 @@ header {
 	height: 400px;
 	margin-top: -250px;
 	margin-left: -300px;
-	/*opacity: 0.8;*/
+	z-index: 2;
+	display: none;
+}
+#modal-badge {
+	top: 50%;
+	left: 50%;
+	position: fixed;
+	width: 250px;
+	height: 300px;
+	margin-top: -250px;
+	margin-left: -125px;
 	z-index: 2;
 	display: none;
 }

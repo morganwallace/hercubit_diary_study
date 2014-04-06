@@ -1,3 +1,6 @@
+var badgeName = ["Newbie","Goal","33","44","55","66","77","88","99"];
+var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","","","","","","",""];
+
 $(document).ready(function () {
 
     /* If first time use */
@@ -17,6 +20,8 @@ $(document).ready(function () {
         $("#signup-form").hide();
         $("header div.header-action").show();
         e.preventDefault();
+
+        getNewbadge(0);
     });
 
     /* Start */
@@ -81,6 +86,7 @@ $(document).ready(function () {
     $("#modal-overlay").on('click', function(){
         $("#modal-overlay").hide();
         $("#modal-goal").hide();
+        $("#modal-badge").hide();
     });
     $("#modal-add-goal").submit(function(e){
         $("#modal-overlay").hide();
@@ -94,7 +100,6 @@ $(document).ready(function () {
 
     /* Activity */
     /************************************************************************/
-
     // TODO: Get activity freq from database
     var activityArray = [0,1,2,0,0,1,1, 3,3,2,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0];
     // var activityArray = [0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0];
@@ -130,8 +135,29 @@ $(document).ready(function () {
         $(this).find("div.menu").show();
     });
 
+
+    /* Achievements */
+    // TODO: Loop through database to get badge list
+    var badgeArray = [1,1,0,0,0,0,0,0,0];
+    
+
+    for (var i=0; i<badgeArray.length; i++){
+        if (badgeArray[i]==1) {
+            $("#achievements").append('<div class="achievement lines clear"><div class="icon"><img src="../static/img/'+badgeName[i]+'.png"></div><div class="desc"><h1>'+badgeName[i]+'</h1><h4>'+badgeDesc[i]+'</h4></div></div>');
+        }
+    }
+
 });
 
+
+function getNewbadge (num) {
+    console.log("bkj"+num);
+    $("#modal-badge").find("h1").text(badgeName[num]);
+    $("#modal-badge").find("img").attr("src","../static/img/"+badgeName[num]+".png");
+    $("#modal-badge").find("span").text("You've " + badgeDesc[num]);
+    $("#modal-overlay").show();
+    $("#modal-badge").show();
+}
 
 
 
