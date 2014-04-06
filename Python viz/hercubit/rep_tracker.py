@@ -165,7 +165,7 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=1,elim_first_value
             elif z_peaks[0]==[] or z_peaks[1] ==[]: pass
             else: #all peaks have occured
                 rep_count+=1
-                # print 'rep '+str(rep_count)+' found at '+str(t[-1])
+                print 'reps: '+str(rep_count)
                 if debug==True:
                     # Graph peaks
                     import matplotlib.pyplot as plt
