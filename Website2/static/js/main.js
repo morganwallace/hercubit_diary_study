@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     // Get goals from the database
     for (var i=1; i<friendArray.length+1; i++) {
-        $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button class="button-action">Message</button><button class="button-action">Challenge</button></div></div>');
+        $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button class="button-small">Message</button><button class="button-small">Challenge</button></div></div>');
     };
 
 
@@ -164,6 +164,8 @@ function getNewbadge (num) {
     $("#modal-badge").find("span").text("You've " + badgeDesc[num]);
     $("#modal-overlay").show();
     $("#modal-badge").show();
+    $("#modal-badge").addClass("animated bounceIn");
+    // $("#modal-badge img").addClass("animated tada");
 }
 
 function queryDatabase () {

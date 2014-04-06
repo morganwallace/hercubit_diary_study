@@ -47,6 +47,27 @@ header {
 	background: #4B9EFF;
 }
 
+.button-small {
+	padding: 0;
+	border: none;
+	background: none;
+	width: 80px;
+	height: 25px;
+	cursor: pointer;
+	border-radius: 3px;
+	background: #4A90E2;
+	-moz-box-shadow:    0px 1px 3px 0px #D4D4D4;
+	-webkit-box-shadow: 0px 1px 3px 0px #D4D4D4;
+	box-shadow:         0px 1px 3px 0px #D4D4D4;
+	color: #FFF;
+	font-size: 13px;
+	font-family: "Lato-light";
+	margin-right: 10px;
+}
+.button-small:hover {
+	background: #4B9EFF;
+}
+
 
 /* modal */
 #modal-overlay {
@@ -79,6 +100,7 @@ header {
 	height: 300px;
 	margin-top: -250px;
 	margin-left: -125px;
+	text-align: center;
 	z-index: 2;
 	display: none;
 }
@@ -323,6 +345,12 @@ div.goal .trash[data-state="hover"] {
 /* for friend */
 div.friend {
 	height: 80px;
+	/* TODO */
+	/*-webkit-transition: -webkit-height .4s ease-in-out;
+    -moz-transition: -moz-height .4s ease-in-out;
+    -ms-transition: -ms-height .4s ease-in-out;
+    -o-transition: -o-height .4s ease-in-out;
+    transition: height .4s ease-in-out;*/
 }
 div.friend .num {
 	float: left;
