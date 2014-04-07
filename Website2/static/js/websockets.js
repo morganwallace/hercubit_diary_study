@@ -43,4 +43,9 @@ $(document).ready(function(){
         socket.emit('stop');
         return false;
     });
+    
+    $('form#signup-form').submit(function(event) {
+        socket.emit('signup');
+        return false;
+    });
 });
