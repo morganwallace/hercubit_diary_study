@@ -32,13 +32,14 @@ def index():
 
 @app.route('/signup', methods=['POST'])
 def signup():
+	print 'test'
 	username = request.form['username']
-	email= request.form['signup-email']
+	# email= request.form['signup-email']
 	app.logger.debug("signup completed for username: " + username)
 	resp = make_response(jsonify(username=username))
 	# This is where we would create a new user in fusion tables
 	#
-	resp.set_cookie('username', username,domain=".app.localhost")
+	resp.set_cookie('username', username)
 	return resp
 
 @app.route('/logout', methods=['POST'])
