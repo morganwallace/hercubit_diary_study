@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, make_response
+from flask import Flask, render_template, session, request, make_response, jsonify
 from flask.ext.socketio import SocketIO, emit
 import time
 import os
@@ -6,8 +6,9 @@ import sys
 import hercubit
 
 
+
 app = Flask(__name__)
-app.debug=True
+app.debug=True  # Disable this before distributing
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 device_data_generator=[]
@@ -22,16 +23,20 @@ DEVICE_CONNECTED=False
 def index():
 	if 'username' in request.cookies:
 		username=request.cookies.get('username')
-	else: username="Morgan"
-	return render_template('index.html',username=username)
+		app.logger.debug(username)
+	else: username=""
+	return render_template('index.html',username=username,month=time.strftime("%B"))
 
 
-@socketio.on('signup', namespace='/test')
+@app.route('/signup', methods=['POST'])
 def signup():
-	resp = make_response(jsonify(success=True, username=username))
-	#app.logger.debug(userId)
-	resp.set_cookie('userId', str(userId))
-	request.set_cookie
+	username = request.form['username']
+	app.logger.debug("signup completed for username: " + username)
+	resp = make_response(jsonify(username=username))
+	# This is where we would create a new user in fusion tables
+	#
+	resp.set_cookie('username', username,domain=".app.localhost")
+	return resp
 
 
 

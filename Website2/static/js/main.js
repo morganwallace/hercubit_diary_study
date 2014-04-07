@@ -9,7 +9,7 @@ $(document).ready(function () {
     // TODO: set cookie to detect if it's first time use
     var firstTimeUse = 1;
     
-    if (firstTimeUse) {
+    if ($("#username").val()!='') {
         $("header div.header-action").hide();
         $("#white-overlay").show();
         $("#signup-form").show();
@@ -20,9 +20,31 @@ $(document).ready(function () {
         $("#signup-form").hide();
         $("header div.header-action").show();
         e.preventDefault();
-
+        signup()
         getNewbadge(0);
     });
+
+    function signup(){
+            $.post("./signup",
+                $("#signup").serialize(),
+                function(data){
+                    console.log(data);
+                    console.log(data.username);
+                    // if(data.success == true){
+                    //     $("#username").text(data.username);
+                    //     $("#signup-wrapper").hide();
+                    //     $("#welcome-wrapper").show();
+                    //     $("#error-message").text("");
+                    // }
+                    // else {
+                    //     console.log(data.reason);
+                    //     // $("#error-message").text(data.reason);
+                    // }
+
+                }
+        );
+        return false;
+    }
 
     /* Start */
     /************************************************************************/
