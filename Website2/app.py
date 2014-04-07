@@ -21,9 +21,11 @@ DEVICE_CONNECTED=False
 
 @app.route('/')
 def index():
+	#show cookie in terminal
+	app.logger.debug("Cookie:\n"+str(request.cookies))
+
 	if 'username' in request.cookies:
 		username=request.cookies.get('username')
-		app.logger.debug(username)
 	else: username=""
 	return render_template('index.html',username=username,month=time.strftime("%B"))
 
@@ -31,6 +33,7 @@ def index():
 @app.route('/signup', methods=['POST'])
 def signup():
 	username = request.form['username']
+	email= request.form['signup-email']
 	app.logger.debug("signup completed for username: " + username)
 	resp = make_response(jsonify(username=username))
 	# This is where we would create a new user in fusion tables
@@ -38,6 +41,20 @@ def signup():
 	resp.set_cookie('username', username,domain=".app.localhost")
 	return resp
 
+@app.route('/logout', methods=['POST'])
+def logout():
+	if 'username' in request.cookies:  
+		resp = make_response(jsonify(success=True, type='logout'))
+		resp.set_cookie('username', '')
+		return resp
+	else:
+		resp = make_response(jsonify(success=False, type='logout'))
+		return resp 
+	# app.logger.debug("Cookie:\n"+str(request.cookies))
+	# resp = make_response(jsonify(username="blerg"))
+	# resp.delete_cookie("username","blerg",domain=".app.localhost")
+	# app.logger.debug(resp)
+	# return resp
 
 
 ########################

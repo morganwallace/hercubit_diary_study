@@ -29,10 +29,11 @@ $(document).ready(function () {
     /* If first time use */
     var firstTimeUse = 1;
 
-    
-    if ($("#username").val()!='') {
-        $("header div.header-action").hide();
-
+    if ($("#username").html()!='') {
+        console.log('user already logged in as:')
+        console.log($("#username").html());
+        firstTimeUse=false;
+    }
     if (firstTimeUse) {
 
         $("#white-overlay").show();
@@ -81,6 +82,18 @@ $(document).ready(function () {
                     // }
 
                 }
+        );
+        return false;
+    }
+
+
+    $("#logout").click(function(){
+        logout();
+    });
+    function logout(){
+            $.post("./logout",
+                function(data){console.log('successful logout');}
+                
         );
         return false;
     }
