@@ -5,11 +5,14 @@
         <title>Hercubit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../static/css/animate.css">
+        <link rel="stylesheet" href="../static/css/animate-customized.css">
     </head>
     <body>
         <header>
             <div class="header-logo">Hercubit</div>
             <div class="header-action">
+
                 <span id="username"hidden>{{username}}</span>
                 <img src="../static/img/kate.png">
                 <img src="../static/img/challenge.png">
@@ -17,14 +20,53 @@
             </div>
         </header>
 
+        <!-- ################## FIRST ################## -->
+
+        <div id="white-overlay"></div>
+        <div id="signup-form" class="card">
+            <div class="left">
+                <p><span class="span-24">Get Strong with Hercubit</span></p>
+                <p><img src="../static/img/hercubit.jpg" style="width:200px;"></p>
+                <p>Get credit for your weight lifting. Hercubit makes it easy to get strong and have fun using real-time feedback on your computer to help you exercise.</p>
+                <!-- <button onclick="auth();">Authorize</button> -->
+                
+            </div>
+            <div class="right">
+                <form id="signup" action="main">
+                    <p><span class="span-24">Sign up:</span></p>
+                    <p>
+                        <label>Email:</label>
+                        <input type="email" name="signup-email">
+                    </p>
+                    <p>
+                        <label>Avatar:</label>
+                        <input type="file" name="signup-avatar">
+                    </p>
+                    <br/><br/><br/>
+                    <input type="submit" value="Sign up" class="button-action">
+                </form>
+            </div>
+        </div>
+
+        <!-- ################## FIRST ################## -->
+
         <!-- Put Modal window here for later use -->
         <div id="modal-overlay"></div>
         <div id="modal-goal" class="card">
             <h1></h1>
             <form id="modal-add-goal">
-                <p>Bicep curl: <input type="number" name="bisep-number" value="0" min="0" max="20"></p>
+
+                <p>Bicep curl: <input type="number" name="bicep-number" value="0" 
+                <select name="type">
+                    <option>bicep curl</option>
+                    <option>Tricep curl</option>
+                    <option>Shoulder</option>
+                </select>
+                <input type="number" name="count" value="0" min="0" max="20"></p>
+<!--                 <p>bicep curl: <input type="number" name="bicep-number" value="0" min="0" max="20"></p>
+>>>>>>> 9bd02d8723dfb610ab26019d56920cecd70e1aed
                 <p>Tricep curl: <input type="number" name="trisep-number" value="0" min="0" max="20"></p>
-                <p>Shoulder: <input type="number" name="shoulder-number" value="0" min="0" max="20"></p>
+                <p>Shoulder: <input type="number" name="shoulder-number" value="0" min="0" max="20"></p> -->
                 <p><input type="submit" value="Add"></p>
             </form>
         </div>
@@ -32,8 +74,9 @@
             <p>You got a new badge!</p>
             <h1></h1>
             <img src="">
-            <p><span></span></p>
+            <br/><br/><p><span></span></p>
         </div>
+
 
         <!-- ######################################## First time use ##################################### -->
 
@@ -83,12 +126,8 @@
                 <div class="button span-24" id="startbtn">Start</div>
                 <span id="debug-output"></span>
             </div>
-            <div class="card" data-state="neutral">
-                <div class="goal lines clear" data-state="neutral" id="add-goal">
-                    <div class="num">+</div>
-                    <div class="desc">Add New Goal</div>
-                </div>
-            </div>
+            <!-- Goals -->
+            <div class="card" data-state="neutral"></div>
         </section>
 
         <!-- Friend list -->
@@ -96,6 +135,7 @@
             <div class="card"></div>
         </section>
 
+        <script src="https://apis.google.com/js/client.js"></script>
         <script src="../static/js/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="../static/js/socket.io.min.js"></script>
         <script src="../static/js/main.js"></script>
