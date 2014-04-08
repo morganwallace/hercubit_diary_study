@@ -23,7 +23,8 @@ samples=[]
 userName="AJ"
 # userName= raw_input("userName: ")
 exerciseType="bicep curls"
-
+#set up maximum allowed time for exercise 
+max_time=25
 
 
 fig, ax = plt.subplots(3, sharex=True)
@@ -43,8 +44,7 @@ for sensor in sensors:
         # print sensor+"("+axis+") : "+colors[i]
         lines[sensor][axis]=ax[sensors.index(sensor)].plot([], [],colors[i], lw=1)
 
-#set up maximum allowed time for exercise 
-max_time=25
+
 
 for i in range(len(axes)):
     ax[i].grid()

@@ -20,7 +20,7 @@ function auth() {
       console.log('login complete');
       // console.log(gapi.auth.getToken());
       token = gapi.auth.getToken().access_token;
-      // console.log(token);
+      console.log(token);
     });
 }
 
@@ -89,13 +89,21 @@ $(document).ready(function () {
 
     $("#logout").click(function(){
         logout();
+        // setTimout(window.location.href ="/",1000)
     });
     function logout(){
             $.post("./logout",
-                function(data){console.log('successful logout');}
+                function(data){
+                    console.log('successful logout');
+
+                    //send the user back to the log in screen by refreshing.
+                    window.location.href ="/";
+                }
                 
         );
+        
         return false;
+
     }
 
     /* Start */

@@ -10,6 +10,7 @@ import csv
 import time
 from hercubit import settings
 from hercubit.device import sensor_stream
+import mpld3
 # filename=join("labeled_data",raw_input("name this training set: "))
 samples=[]
 
@@ -85,6 +86,12 @@ def run(data):
         ax[0].figure.canvas.draw()
         ax[1].figure.canvas.draw()
         ax[2].figure.canvas.draw()
+    
+    # print mpld3.fig_to_html(fig)
+    # if time.time()>t0+3:
+    #     mpld3.show(fig)
+    #     quit()
+
 
     return None
     # lines['magnet']['x'],lines['magnet']['y'],lines['magnet']['z']
