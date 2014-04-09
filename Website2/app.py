@@ -14,6 +14,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 device_data_generator=[]
 DEVICE_CONNECTED=False
+ser=''
 
 # Fusion Tables constants
 exerciseTableId = "1OBObNVqy3kHdpdDaGaC1xH5sfmGWb-oGBNfosOMo";
@@ -22,13 +23,13 @@ scopes = 'https://www.googleapis.com/auth/fusiontables';
 clientId = '755998331131-jsf1f67tj7ojvlc9bai1p6273qidsbn5.apps.googleusercontent.com';
 # apiKey = 'AIzaSyD1nrNVFFr6z0_S9vOryX9kF7U-7pVZDBU'; //charles
 apiKey = "AIzaSyA8juHC7LiH4pY4HM3XPIUTuFFt6y2jWqU"
-username=''
+# username=''
 ########################
 # Normal web server stuff
 
 @app.route('/')
 def index():
-	global username
+	# global username
 	#show cookie in terminal
 	app.logger.debug("Cookie:\n"+str(request.cookies))
 
@@ -38,6 +39,7 @@ def index():
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getAllGoals.php?username="+username
 		response = urllib2.urlopen(url)
 		goals = json.load(response)
+		app.logger.debug(goals)
 	else: 
 		print "else"
 		username = ""
@@ -48,7 +50,7 @@ def index():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-	global username
+	# global username
 	print 'test'
 	username = request.form['username']
 	# email= request.form['signup-email']
@@ -134,22 +136,21 @@ def checkBadge():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
-# @app.route('/addexercise',methods=['POST'])
 def addexercise(exercise_data):
-	if 'username' in request.cookies:
-		
-		username = request.cookies.get('username')
-		exercise=request.form['']
-		count=request.form['']
-		weight=request.form['']
-		goal_complete=request.form['']
+	count= exercise_data['count']
+	username = request.cookies.get('username')
+	exercise=exercise_data['type']
+	count=exercise_data['count']
+	weight=exercise_data['weight']
+	goal_complete=exercise_data['goal_complete']
 
-		url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+count+"&weight="+weight+"&goal_complete="+goal_complete
-		response = urllib2.urlopen(url)
-		userInfo = json.load(response)
-		print userInfo
-		resp = make_response(jsonify(userInfo=userInfo))
-		return resp
+	url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+str(count)+"&weight="+str(weight)+"&goal_complete="+goal_complete
+	print url
+	response = urllib2.urlopen(url)
+	userInfo = json.load(response)
+	print userInfo
+	resp = make_response(jsonify(username=userInfo))
+	return resp
 ########################
 # connection with device
 
@@ -160,11 +161,12 @@ def debug():
 
 @socketio.on('bluetooth_conn', namespace='/test')
 def bluetooth_conn():
-	global device_data_generator, DEVICE_CONNECTED
+	global device_data_generator, DEVICE_CONNECTED, ser
 	print "user requested connection"
 	DEVICE_CONNECTED=True
 	from hercubit import device
-	device_data_generator=device.sensor_stream()#simulate_sample_rate=False
+	ser,conn_type=device.connect(bluetooth_enabled=False)
+	device_data_generator=device.sensor_stream(ser,conn_type)#simulate_sample_rate=False
 	from hercubit.settings import sampleRate
 	emit('connection established',{'sample_rate': sampleRate*1000})
 
@@ -177,7 +179,7 @@ def get_sample():
 	from hercubit import rep_tracker
 	if DEVICE_CONNECTED==True:
 		sample=device_data_generator.next()
-		print sample #uncomment to see raw output
+		# print sample #uncomment to see raw output
 		count=rep_tracker.live_peaks(sample)
 		if count!=None:
 			emit('device response', {'data': count})
@@ -185,12 +187,17 @@ def get_sample():
 
 @socketio.on('stop', namespace='/test')
 def stop(exercise_data):
-	global DEVICE_CONNECTED
+	global DEVICE_CONNECTED, ser
 	print exercise_data
-	addexercise(exercise_data)
-	DEVICE_CONNECTED=False
-	from hercubit.settings import ser
 	ser.close()
+	ser =''
+	hercubit.rep_tracker.rep_count=0
+	#send to database
+	addexercise(exercise_data)
+	
+	DEVICE_CONNECTED=False
+	# from hercubit.settings import ser
+	# ser.close()
 	print "stopped"
 	emit('Bluetooth Connection Stopped')
 

@@ -36,9 +36,10 @@ $(document).ready(function () {
       $.post("./signup",
         $("#signup").serialize(),
         function(data){
-
-          if(data.success == true){
+            console.log('refresh?');
             window.location.href= "/";
+          if(data.success == true){
+            
           }
       
           return false;
@@ -162,7 +163,7 @@ function updateGoals() {
   // Click to choose the goal
   $("div.goal").on('click', function(){
       if (this.id!=="add-goal") {
-          $("#chosen-goal span").text($(this).find('div.num').text() +": "+ $(this).find('div.desc').text())
+          $("#chosen-goal span").html($(this).find('div.num').text() +": "+ $(this).find('div.desc').html())
           $("#startbtn").removeClass("disable");
       }
   });
