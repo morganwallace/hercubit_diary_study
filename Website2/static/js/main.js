@@ -86,10 +86,10 @@ $(document).ready(function () {
         return false;
     }
 
-
+    //When the user clicks logout call logout in app.py and delete cookie
+    // then refresh when python sends the success response
     $("#logout").click(function(){
         logout();
-        // setTimout(window.location.href ="/",1000)
     });
     function logout(){
             $.post("./logout",

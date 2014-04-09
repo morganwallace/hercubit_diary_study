@@ -8,7 +8,7 @@ import hercubit
 
 
 app = Flask(__name__)
-# app.debug=True  # Disable this before distributing
+app.debug=True  # Disable this before distributing
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 device_data_generator=[]
