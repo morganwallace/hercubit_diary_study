@@ -116,6 +116,21 @@ def deleteGoal():
 	resp = make_response(jsonify(username=username))
 	return resp
 
+@app.route('/checkBadge', methods=['POST'])
+def checkBadge():
+	print 'checkBadge'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
+		# badgeNum = request.form['badgeNum']
+		# print username
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php?username="+username
+		response = urllib2.urlopen(url)
+		userInfo = json.load(response)
+		print userInfo
+
+	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
 
 
 ########################

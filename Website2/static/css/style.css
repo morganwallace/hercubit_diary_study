@@ -316,6 +316,11 @@ div.button#startbtn[data-state="slide-out"] {
     -o-transform: translateY(300px);
     transform: translateY(300px);
 }
+div.button.disable {
+	/*disabled: disabled;*/
+	pointer-events: none;
+	background: #eee;
+}
 
 /* for goal */
 div.goal .num {
@@ -393,6 +398,17 @@ div#activity-map .code.level-2 {
 }
 div#activity-map .code.level-3 {
 	background-color: #386323;
+}
+
+/* Tooltip */
+.tooltip {
+	width: 200px;
+	height: 100px;
+	background: #eee;
+	color: #000;
+	opacity: 0.8;
+	display: none;
+	position: absolute;
 }
 
 /*clearfix*/
