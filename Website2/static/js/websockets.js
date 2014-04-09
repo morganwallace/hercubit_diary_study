@@ -4,21 +4,27 @@ $(document).ready(function(){
     var samples = {};
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
     
-
-    //Receivers for Web Sockets
+    //
+    //    Receivers for Web Sockets
+    //
     socket.on('connect', function(msg) {
         $('#log').append('<p>Web Socket Established</p>');
     });
+
+    //Device is connected now so request data from server at the sample rate
     socket.on('connection established', function(msg) {
         $('#log').append('<p>Bluetooth Connection Established</p>');
         setInterval( function() { 
             socket.emit('get_sample');
         }, msg.sample_rate);
     });
+    
+    // Show output of device in DOM
     socket.on('device response', function(msg) {
-        // $('#debug-output').html('<p>Accelerometer data: ' + msg.data + '</p>');
         $("#count_numerator").html(msg.data)
     });
+
+
     socket.on('Bluetooth Connection Stopped', function(msg) {
         $('#log').append('<p>Bluetooth connection Stopped</p>');
     });
@@ -31,11 +37,9 @@ $(document).ready(function(){
     $('#startbtn').click(function(event) {
         if ($('#startbtn').html()=='Done'){
             socket.emit('bluetooth_conn');
-            $('#debug-output').show()
         }
         else {
-            socket.emit('stop');
-            $('#debug-output').hide()
+            socket.emit('stop',"hi");
         }
         return false;
     });

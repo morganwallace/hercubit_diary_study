@@ -22,12 +22,13 @@ scopes = 'https://www.googleapis.com/auth/fusiontables';
 clientId = '755998331131-jsf1f67tj7ojvlc9bai1p6273qidsbn5.apps.googleusercontent.com';
 # apiKey = 'AIzaSyD1nrNVFFr6z0_S9vOryX9kF7U-7pVZDBU'; //charles
 apiKey = "AIzaSyA8juHC7LiH4pY4HM3XPIUTuFFt6y2jWqU"
-
+username=''
 ########################
 # Normal web server stuff
 
 @app.route('/')
 def index():
+	global username
 	#show cookie in terminal
 	app.logger.debug("Cookie:\n"+str(request.cookies))
 
@@ -47,6 +48,7 @@ def index():
 
 @app.route('/signup', methods=['POST'])
 def signup():
+	global username
 	print 'test'
 	username = request.form['username']
 	# email= request.form['signup-email']
@@ -132,7 +134,22 @@ def checkBadge():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
+# @app.route('/addexercise',methods=['POST'])
+def addexercise(exercise_data):
+	if 'username' in request.cookies:
+		
+		username = request.cookies.get('username')
+		exercise=request.form['']
+		count=request.form['']
+		weight=request.form['']
+		goal_complete=request.form['']
 
+		url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+count+"&weight="+weight+"&goal_complete="+goal_complete
+		response = urllib2.urlopen(url)
+		userInfo = json.load(response)
+		print userInfo
+		resp = make_response(jsonify(userInfo=userInfo))
+		return resp
 ########################
 # connection with device
 
@@ -167,8 +184,10 @@ def get_sample():
 
 
 @socketio.on('stop', namespace='/test')
-def stop():
+def stop(exercise_data):
 	global DEVICE_CONNECTED
+	print exercise_data
+	addexercise(exercise_data)
 	DEVICE_CONNECTED=False
 	from hercubit.settings import ser
 	ser.close()
@@ -178,13 +197,13 @@ def stop():
 
 @socketio.on('web_socket_connected', namespace='/test')
 def test_connect():
-	print "connected"
+	print "Web Sockets: Client connected"
 	emit('connect', {'data': 'Connected'})
 
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
-    print('Client disconnected')
+    print('Web Sockets: Client disconnected')
 
 
 

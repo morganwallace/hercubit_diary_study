@@ -36,22 +36,14 @@ $(document).ready(function () {
       $.post("./signup",
         $("#signup").serialize(),
         function(data){
-          console.log(data);
-          console.log(data.username);
-          // if(data.success == true){
-          //     $("#username").text(data.username);
-          //     $("#signup-wrapper").hide();
-          //     $("#welcome-wrapper").show();
-          //     $("#error-message").text("");
-          // }
-          // else {
-          //     console.log(data.reason);
-          //     // $("#error-message").text(data.reason);
-          // }
+
+          if(data.success == true){
+            window.location.href= "/";
+          }
+      
+          return false;
         }
-      );
-      return false;
-    }
+      )}
 
     //When the user clicks logout call logout in app.py and delete cookie
     // then refresh when python sends the success response
