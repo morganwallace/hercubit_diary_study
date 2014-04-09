@@ -35,12 +35,23 @@
                 <form id="signup" action="main">
                     <p><span class="span-24">Sign up:</span></p>
                     <p>
-                        <label>Email:</label>
-                        <input type="email" name="signup-email">
+                        <!-- <label>Email:</label> -->
+                        <input type="email" name="signup-email" placeholder='email' required>
                     </p>
                     <p>
-                        <label>Username:</label>
-                        <input name="username">
+<!--                         <label>Username:</label>
+ -->                        <input name="username" placeholder="username" required>
+                    </p>
+                    <p>
+                        <label>Gender:</label>
+                        <select name="gender" required>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label>Age:</label>
+                        <input type="number" name='age' required>
                     </p>
                     <p>
                         <label>Avatar:</label>

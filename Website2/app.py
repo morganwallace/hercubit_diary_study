@@ -9,13 +9,19 @@ import urllib2,json
 
 
 app = Flask(__name__)
-app.debug=True  # Disable this before distributing
+# app.debug=True  # Disable this before distributing
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 device_data_generator=[]
 DEVICE_CONNECTED=False
 
-
+# Fusion Tables constants
+exerciseTableId = "1OBObNVqy3kHdpdDaGaC1xH5sfmGWb-oGBNfosOMo";
+goalTableId = "1R8s9_P6t9IH8DOG3rBieAh05W9_H5C2K4MdQCuRG";
+scopes = 'https://www.googleapis.com/auth/fusiontables';
+clientId = '755998331131-jsf1f67tj7ojvlc9bai1p6273qidsbn5.apps.googleusercontent.com';
+# apiKey = 'AIzaSyD1nrNVFFr6z0_S9vOryX9kF7U-7pVZDBU'; //charles
+apiKey = "AIzaSyA8juHC7LiH4pY4HM3XPIUTuFFt6y2jWqU"
 
 ########################
 # Normal web server stuff
@@ -139,7 +145,7 @@ def get_sample():
 	from hercubit import rep_tracker
 	if DEVICE_CONNECTED==True:
 		sample=device_data_generator.next()
-		# print sample #uncomment to see raw output
+		print sample #uncomment to see raw output
 		count=rep_tracker.live_peaks(sample)
 		if count!=None:
 			emit('device response', {'data': count})
