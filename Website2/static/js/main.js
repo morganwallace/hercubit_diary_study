@@ -178,17 +178,8 @@ function updateGoals() {
   );
   // Click to delete the goal
   $("div.goal .trash").on('click', function(){
-      // console.log($(this).parent()[0].id);
-      // $(this).parent()[0].remove();
       console.log($(this).parent()[0].id);
       
-      // $.ajax({
-      //   type: "get",
-      //   url: "/deleteGoal",
-      //   success: function(data) {
-
-      //   }
-      // });
 
       $.post ("/deleteGoal",
         { id: $(this).parent()[0].id },
@@ -204,7 +195,8 @@ function updateGoals() {
   // Click to choose the goal
   $("div.goal").on('click', function(){
       if (this.id!=="add-goal") {
-          $("#chosen-goal span").text($(this).find('div.num').text() +": "+ $(this).find('div.desc').text());
+          $("#chosen-goal span").text($(this).find('div.num').text() +": "+ $(this).find('div.desc').text())
+          $("#startbtn").removeClass("disable");
       }
   });
 

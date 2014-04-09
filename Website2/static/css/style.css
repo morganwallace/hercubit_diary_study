@@ -316,6 +316,11 @@ div.button#startbtn[data-state="slide-out"] {
     -o-transform: translateY(300px);
     transform: translateY(300px);
 }
+div.button.disable {
+	/*disabled: disabled;*/
+	pointer-events: none;
+	background: #eee;
+}
 
 /* for goal */
 div.goal .num {
