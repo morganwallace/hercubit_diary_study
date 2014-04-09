@@ -377,10 +377,10 @@ div#activity-map {
 	padding: 0 10px;
 }
 div#activity-map .code {
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
 	display: inline-block;
-	margin: 2px;
+	margin: 3px;
 }
 div#activity-map .code.level-0 {
 	background-color: #eee;

@@ -4,6 +4,7 @@ import time
 import os
 import sys
 import hercubit
+import urllib2,json
 
 
 
@@ -31,9 +32,17 @@ def index():
 	app.logger.debug("Cookie:\n"+str(request.cookies))
 
 	if 'username' in request.cookies:
-		username=request.cookies.get('username')
-	else: username=""
-	return render_template('index.html',username=username,month=time.strftime("%B"))
+		username = request.cookies.get('username')
+		print username
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getAllGoals.php?username="+username
+		response = urllib2.urlopen(url)
+		goals = json.load(response)
+	else: 
+		print "else"
+		username = ""
+		goals = ""
+
+	return render_template('index.html',username=username,month=time.strftime("%B"),goals=goals)
 
 
 @app.route('/signup', methods=['POST'])
@@ -62,6 +71,51 @@ def logout():
 	# resp.delete_cookie("username","blerg",domain=".app.localhost")
 	# app.logger.debug(resp)
 	# return resp
+
+
+########################
+# connection to the db server
+@app.route('/addGoal', methods=['POST'])
+def addGoal():
+	print 'addGoal'
+	if 'username' in request.cookies: 
+		username = request.cookies.get('username')
+
+		exerciseType = request.form['exerciseType']
+		exerciseCount = request.form['exerciseCount']
+		exerciseWeight = request.form['exerciseWeight']
+		if exerciseType==0:
+			exerciseType = "Bisep curl"
+		elif exerciseType==1:
+			exerciseType = "Trisep curl"
+		else:
+			exerciseType = "Shoulder"
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewGoal.php?username="+username+"&exercise="+exerciseType+"&count="+exerciseCount+"&weight="+exerciseWeight
+		response = urllib2.urlopen(url)
+		insertStatus = json.load(response)
+
+	resp = make_response(jsonify(username=username))
+	return resp
+
+@app.route('/deleteGoal', methods=['POST'])
+def deleteGoal():
+	print 'deleteGoal'
+	if 'username' in request.cookies:
+		
+		username = request.cookies.get('username')
+		print username
+
+		goalId = request.form['id'][5:]
+		print goalId
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/deleteGoal.php?id="+goalId
+		response = urllib2.urlopen(url)
+		deleteStatus = json.load(response)
+
+	resp = make_response(jsonify(username=username))
+	return resp
+
 
 
 ########################
