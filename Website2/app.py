@@ -136,6 +136,21 @@ def checkBadge():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
+@app.route('/insertBadge', methods=['POST'])
+def insertBadge():
+	print 'insertBadge'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
+		badgeNum = request.form['badgeNum']
+		# print username
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewBadge.php?username="+username+"&badgeNum="+badgeNum
+		response = urllib2.urlopen(url)
+		userInfo = json.load(response)
+		print userInfo
+
+	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
 
 ########################
 # connection with device

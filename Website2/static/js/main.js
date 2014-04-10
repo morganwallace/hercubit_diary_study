@@ -2,7 +2,7 @@
 // var username = "kate";
 
 var badgeName = ["Newbie","Goal","Strike3","Strike7","Five","Completion"];
-var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","3-day Strike!","7-day Strike!","Five sessions!","Complete your first goal!"];
+var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","3-day Strike!","7-day Strike!","Five sessions!","Complete your first exercise!"];
 var badgeArray = [0,0,0,0,0,0];
 
 $(document).ready(function () {
@@ -115,22 +115,23 @@ $(document).ready(function () {
         $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button class="button-small">Message</button><button class="button-small">Challenge</button></div></div>');
     };
 
-    $("html").on("click", function(){
-        $("div.friend").css("height", "80px");
-        $("div.friend").find("div.menu").hide();
-    })
-    $("div.friend").on("click", function(e){
-        e.stopPropagation();
-        $("div.friend").css("height", "80px");
-        $("div.friend").find("div.menu").hide();
-        $(this).css("height","160px");
-        $(this).find("div.menu").show();
-    });
+    /* Comment off for hiding the Message & Challenge buttons */
+    // $("html").on("click", function(){
+    //     $("div.friend").css("height", "80px");
+    //     $("div.friend").find("div.menu").hide();
+    // })
+    // $("div.friend").on("click", function(e){
+    //     e.stopPropagation();
+    //     $("div.friend").css("height", "80px");
+    //     $("div.friend").find("div.menu").hide();
+    //     $(this).css("height","160px");
+    //     $(this).find("div.menu").show();
+    // });
 
 
     /* Achievements */
     // TODO: Loop through database to get badge list
-    updateBadges();
+    checkBadge();
 
 
 });
@@ -186,71 +187,84 @@ function updateGoals() {
         $("#modal-add-goal").serialize(),
         function(data) {
           console.log("post addGoal");
+          // TODO: FIX the disappearing modal window
           window.location.href = "/";
+          getNewBadge(1);
         }
       );
+
       e.preventDefault();
 
   });
 }
 
-function updateBadges() {
+function checkBadge() {
   $.post("/checkBadge",
     function(data) {
-      console.log("get all badges");
       for (var i=1; i<7; i++) {
         badgeArray[i-1] = data['userInfo']['badge'+i];
-
-        if (badgeArray[i-1]==1) { // already get
-          console.log(badgeName[i-1]);
-          console.log($("#badge"+i));
-          $("#badge"+i+" img").attr("src","../static/img/"+badgeName[i-1]+".png");
-            // $("#achievements").append('<div class="achievement clear"><div class="icon"><img src="../static/img/'+badgeName[i]+'.png"></div><div class="desc"><h1>'+badgeName[i]+'</h1><h4>'+badgeDesc[i]+'</h4></div></div>');
-        }
-
-        // TODO: hover to see metadata
-        $("#badge"+i).hover((function(i){
-          return function(){
-            $(".tooltip").html("<p>"+badgeName[i-1]+"</p><p>"+badgeDesc[i-1]+"</p>");
-            $(".tooltip").css("top", $(this).position().top+20);
-            $(".tooltip").css("left", $(this).position().left);
-            $(".tooltip").show();
-          }
-        })(i),
-        (function(i){
-          return function(){
-            $(".tooltip").hide();
-          }
-        })(i)
-        );
-
       }
+      updateBadge(); 
     }
-);
+  )
+};
 
-function forTooltip(i) {
-  return function() {
-    console.log("My value: " + i);
-    return badgeName[i-1];
+function updateBadge() {
+  for (var i=1; i<7; i++) {
+    // badge already get
+    if (badgeArray[i-1]==1) { 
+      $("#badge"+i+" img").attr("src","../static/img/"+badgeName[i-1]+".png");
+    }
+    else { 
+
+    }
+    $("#badge"+i).hover((function(i){
+      return function(){
+        $(".tooltip").html("<p>"+badgeName[i-1]+"</p><p>"+badgeDesc[i-1]+"</p>");
+        $(".tooltip").css("top", $(this).position().top+20);
+        $(".tooltip").css("left", $(this).position().left);
+        $(".tooltip").show();
+      }
+    })(i),
+    (function(i){
+      return function(){
+        $(".tooltip").hide();
+      }
+    })(i));
   }
 }
 
-  
-    
-
-
-}
 
 function getNewBadge (badgeNum) {
+  checkBadge();
 
-    //console.log("bkj"+badgeNum);
-    // TODO: if data with badgeNum is 0
-
+  if (badgeArray[badgeNum]==0) {
     $("#modal-badge").find("h1").text(badgeName[badgeNum]);
     $("#modal-badge").find("img").attr("src","../static/img/"+badgeName[badgeNum]+".png");
     $("#modal-badge").find("span").text("You've " + badgeDesc[badgeNum]);
     $("#modal-overlay").show();
     $("#modal-badge").show();
     $("#modal-badge").addClass("animated bounceIn");
+
+    insertBadge(badgeNum);
+  }
+
     
+}
+
+function insertBadge(badgeNum) {
+  badgeNum = badgeNum + 1;
+
+  $.post("/insertBadge",
+    { badgeNum: badgeNum },
+    function(data) {
+      checkBadge();
+    }
+  )
+};
+
+function forTooltip(i) {
+  return function() {
+    return badgeName[i-1];
+  }
 }
