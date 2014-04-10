@@ -6,6 +6,9 @@ var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","3-day Strike
 var badgeArray = [0,0,0,0,0,0];
 var flagFTG = 0;
 
+var activityArray = [0,0,0,0,0,0,0];
+var startDate = new Date("2014-04-09");
+
 $(document).ready(function () {
 
     /* If first time use */
@@ -99,14 +102,7 @@ $(document).ready(function () {
 
     /* Activity */
     /************************************************************************/
-    // TODO: Get activity freq from database
-    var activityArray = [0,1,2,0,3,2,1];
-
-    for (var i=1; i<activityArray.length+1; i++) {
-        var code = '<div class="code" id="code-'+i+'"></div>';
-        $("#activity-map").append(code);
-        $("#code-"+i).addClass("level-"+activityArray[i-1]);
-    }
+    getActivities();
 
 
     /* Friends */
@@ -219,6 +215,79 @@ function updateGoals() {
   });
 }
 
+function getActivities() {
+  $.post("/getActivities",
+    function(data) {
+      console.log(data);
+      for (var i=0; i<7; i++) {
+        activityArray[i] = data['userInfo']['act_day'+i];
+      }
+      console.log("activityArray: "+activityArray);
+      for (var i=1; i<activityArray.length+1; i++) {
+        var code = '<div class="code" id="code-'+i+'"></div>';
+        $("#activity-map").append(code);
+        $("#code-"+i).addClass("level-"+activityArray[i-1]);
+      }
+
+    }
+  );  
+}
+
+function determineActivity() {
+  $.post("/determineActivity",
+    function(data) {
+      // console.log(data);
+      var todayDate = new Date();
+      var diff = new Date(todayDate-startDate);
+      diff = Math.floor(diff/1000/60/60/24);
+      console.log("diff"+diff);
+      var e = data['activityInfo']['E'];
+      var g = data['activityInfo']['G'];
+      var level = 0;
+
+      if (e==0) {
+        level = 0;
+      }
+      else if (e<g) {
+        level = 1;
+      }
+      else if (e==g) {
+        level = 2;
+      }
+      else if (e>g) {
+        level = 3;
+      }
+      else {
+        level = 0;
+        console.log("Something wrong with activity map");
+      }
+      activityArray[diff] = level;
+
+      // activityArray[diff] = data['activityUpdateInfo']['G'];
+
+      // console.log("activityArray: "+activityArray);
+      for (var i=1; i<activityArray.length+1; i++) {
+        var code = '<div class="code" id="code-'+i+'"></div>';
+        $("#activity-map").append(code);
+        $("#code-"+i).addClass("level-"+activityArray[i-1]);
+      }
+
+      updateActivity(diff, level);
+    }
+  );    
+}
+
+function updateActivity(diff, level) {
+  console.log("updateActivity, diff="+diff);
+  $.post("/updateActivity",
+    { diff: diff,
+      level: level },
+    function(data) {
+      console.log("updateActivity success");
+    }
+  );
+}
+
 function checkBadge() {
   $.post("/checkBadge",
     function(data) {
@@ -300,7 +369,7 @@ function insertBadge(badgeNum) {
     function(data) {
       checkBadge();
     }
-  )
+  );
 };
 
 function forTooltip(i) {

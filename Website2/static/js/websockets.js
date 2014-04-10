@@ -51,6 +51,7 @@ $(document).ready(function(){
     //
     var finished_exercising= function(){
         // console.log("bbb");
+        determineActivity();
         getNewBadge(2);
         getNewBadge(3);
         getNewBadge(4);
