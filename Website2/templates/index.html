@@ -18,10 +18,14 @@
                 <img src={{ img_path }}>
 <!--                 <img src="../static/img/challenge.png">
                 <img src="../static/img/setting.png"> -->
-                <button id='logout' class="">Logout</button>
+<!--                 <img src="../static/img/info.svg" id='info' class="header_icons"></img> -->
+                <img src="../static/img/logout.svg" id='logout' title="Logout" class="header_icons"><!-- Logout --></img>
+                <img src="../static/img/close.svg" id='Quit' title="Quit" class="header_icons"></img>
             </div>
         </header>
-
+<!--         <div id='info-panel' hidden>
+            
+        </div> -->
         <!-- ################## FIRST ################## -->
 
         <div id="white-overlay"></div>
@@ -54,10 +58,10 @@
                         <label>Age:</label>
                         <input type="number" name='age' required>
                     </p> -->
-                    <p>
+                    <!-- <p>
                         <label>Avatar:</label>
                         <input type="file" name="signup-avatar">
-                    </p>
+                    </p> -->
                     <br/><br/><br/>
                     <input type="submit" value="Sign up" class="button-action">
                 </form>
@@ -125,6 +129,7 @@
                     <span id='count_numerator' class="span-288 ">0</span>
                     <span id='count_denomenator' class="span-36 span-regular">/0</span>
                 </div>
+                <div id="connection_status"></div>
                 <div class="button span-24 disable" id="startbtn">Start</div>
             </div>
             <!-- Goals -->
