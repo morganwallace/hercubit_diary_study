@@ -25,6 +25,39 @@ header {
 .span-24 {
 	font-size: 24px;
 }
+.header_icons{
+	width: 25px;
+	display: inline;
+    position: relative;
+}
+.header_icons:hover{
+	cursor: pointer;
+	cursor: hand;
+}
+.header_icons:hover:after{
+	background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    bottom: 26px;
+    color: #fff;
+    content: attr(title);
+    left: 20%;
+    padding: 5px 15px;
+    position: absolute;
+    z-index: 198;
+    width: 220px;
+}
+
+.header_icons:hover:before{
+    border: solid;
+    border-color: #333 transparent;
+    border-width: 6px 6px 0 6px;
+    bottom: 20px;
+    content: "";
+    left: 50%;
+    position: absolute;
+    z-index: 199;
+}
 
 
 .button-action {

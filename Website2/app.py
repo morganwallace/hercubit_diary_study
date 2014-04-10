@@ -102,12 +102,13 @@ def addGoal():
 		exerciseType = request.form['exerciseType']
 		exerciseCount = request.form['exerciseCount']
 		exerciseWeight = request.form['exerciseWeight']
-		if exerciseType==0:
-			exerciseType = "Bisep curl"
-		elif exerciseType==1:
-			exerciseType = "Trisep curl"
-		else:
-			exerciseType = "Shoulder"
+		app.logger.debug(exerciseType)
+		# if exerciseType==0:
+		# 	exerciseType = "Bicep curl"
+		# elif exerciseType==1:
+		# 	exerciseType = "Tricep curl"
+		# else:
+		# 	exerciseType = "Shoulder press"
 
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewGoal.php?username="+username+"&exercise="+exerciseType+"&count="+exerciseCount+"&weight="+exerciseWeight
 		response = urllib2.urlopen(url)

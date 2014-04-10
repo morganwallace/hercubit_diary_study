@@ -26,7 +26,7 @@ $(document).ready(function () {
         $("#signup-form").hide();
         $("header div.header-action").show();
         e.preventDefault();
-        $("#username").text($("#username").text().toLowerCase())
+        $("#username").text($("#username").text().toLowerCase());
         signup();
         
     });
@@ -271,3 +271,9 @@ function forTooltip(i) {
     return badgeName[i-1];
   }
 }
+
+
+// window.onbeforeunload = confirmExit;
+// function confirmExit() {
+//     return "Please instead click 'Quit' in the top right to exit and allow the application to shutdown as well. Thank you.";
+// }
