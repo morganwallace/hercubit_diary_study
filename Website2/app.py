@@ -40,12 +40,13 @@ def index():
 		response = urllib2.urlopen(url)
 		goals = json.load(response)
 		# app.logger.debug(goals)
+		img_path="../static/img/"+username+".png"
 	else: 
 		print "else"
 		username = ""
 		goals = ""
 
-	return render_template('index.html',username=username,month=time.strftime("%B"),goals=goals)
+	return render_template('index.html',username=username,month=time.strftime("%B"),goals=goals,img_path=img_path)
 
 
 @app.route('/signup', methods=['POST'])
@@ -209,17 +210,15 @@ def addexercise(exercise_data):
 	goal_complete=exercise_data['goal_complete']
 
 	url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+str(count)+"&weight="+str(weight)+"&goal_complete="+goal_complete
-	print url
+	app.logger.debug("Exercise added to DB:\n"+str(exercise_data))
 	response = urllib2.urlopen(url)
 	userInfo = json.load(response)
-	print userInfo
 	resp = make_response(jsonify(username=userInfo))
 	return resp
 
 @socketio.on('stop', namespace='/test')
 def stop(exercise_data):
 	global DEVICE_CONNECTED, ser
-	print exercise_data
 	ser.close()
 	ser =''
 	hercubit.rep_tracker.rep_count=0
@@ -228,7 +227,7 @@ def stop(exercise_data):
 	addexercise(exercise_data)
 	
 	DEVICE_CONNECTED=False
-	print "stopped"
+	print "Connection stopped"
 	emit('Bluetooth Connection Stopped')
 
 
