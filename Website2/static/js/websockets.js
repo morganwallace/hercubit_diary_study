@@ -31,7 +31,8 @@ $(document).ready(function(){
         var goal_num=$("#chosen-goal .goal_count").text()*1;
         var count= $("#count_numerator").html()*1;
         if (count>=goal_num){
-            $("#count_numerator").css("color",'green')
+            $("#count_numerator").css("color",'green');
+            $("#connection_status").text("You rock! You reached your goal.")
         }
     }
     // Show output of device in DOM

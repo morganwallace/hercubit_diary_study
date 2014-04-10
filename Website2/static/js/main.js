@@ -137,6 +137,20 @@ $(document).ready(function () {
     // TODO: Loop through database to get badge list
     checkBadge();
 
+    //Show exercise .gif based on which is selected.
+  $("#pick_exercise").change(function(){
+    console.log($("#pick_exercise").val());
+    if($("#pick_exercise").val()=='Tricep curls'){
+      console.log("changing to tricp gif")
+      $("#goal_pic_gif").html('<img src="../static/img/tricep_kickbacks.gif">');
+    }
+    else if($("#pick_exercise").val()=='Bicep curls'){
+     $("#goal_pic_gif").html('<img src="../static/img/bicep_curl.gif">'); 
+    }
+    else if($("#pick_exercise").val()=='Shoulder press'){
+     $("#goal_pic_gif").html('<img src="../static/img/shoulder_press.gif">');  
+    }
+  });
 
 });
 
@@ -294,6 +308,8 @@ function forTooltip(i) {
     return badgeName[i-1];
   }
 }
+
+
 
 
 // window.onbeforeunload = confirmExit;

@@ -72,19 +72,22 @@
         <!-- Put Set Goal window here for later use -->
         <div id="modal-overlay"></div>
         <div id="modal-goal" class="card">
-            <h1></h1>
+            <h4>You can perform 3 types of exercise (bicep curls, tricep curls, and shoulder press)</h4>
             <form id="modal-add-goal" action="/addGoal" method="POST">
 
                 <p>Type 
-                <select name="exerciseType">
-                    <option>Bicep</option>
-                    <option>Tricep</option>
-                    <option>Shoulder</option>
+                <select name="exerciseType" id='pick_exercise'>
+                    <option>Bicep curls</option>
+                    <option>Tricep curls</option>
+                    <option>Shoulder press</option>
                 </select></p>
+                <!-- <p><input type="radio" name="exerciseType" value="Bicep Curls">Bicep Curls<img src="../static/img/bicep_curl.gif"></p>
+                <p><input type="radio" name="exerciseType" value="Tricep Curls">Tricep Curls<img src="../static/img/tricep_kickbacks.gif"></p> -->
                 <p><label>Count</label><input type="number" name="exerciseCount" value="0" min="0" max="20"></p>
                 <p><label>Weight</label><input type="number" name="exerciseWeight" value="0" min="0" max="20"></p>
                 <p><input type="submit" value="Add"></p>
             </form>
+            <span id='goal_pic_gif'><img src="../static/img/bicep_curl.gif"></span>
         </div>
 
         <!-- <div id="modal-all-bagdes" class="card"></div> -->
@@ -128,8 +131,9 @@
                 <div id="count" data-state="neutral">
                     <span id='count_numerator' class="span-288 ">0</span>
                     <span id='count_denomenator' class="span-36 span-regular">/0</span>
+                    <div id="connection_status"></div>
                 </div>
-                <div id="connection_status"></div>
+                
                 <div class="button span-24 disable" id="startbtn">Start</div>
             </div>
             <!-- Goals -->
@@ -139,10 +143,10 @@
                     <div class="num">Goal {{ loop.index }}</div>
                     <div class="desc">
                         <span class='exercise_type'>{{ goal['exercise'] }}</span>
-                        : (
-                        <span class="goal_weight">{{ goal['weight'] }}</span>
-                         lbs) x 
-                         <span class="goal_count">{{ goal['count']}}</span></div>
+                        : (<span class="goal_weight">{{goal['weight'] }}</span>
+                         lbs) for 
+                         <span class="goal_count">{{ goal['count']}}</span>
+                          repititions</div>
                     <div class="trash"><img src="../static/img/trash.png"></div>
                 </div>          
                 {% endfor %}
