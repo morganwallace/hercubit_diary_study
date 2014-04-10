@@ -9,6 +9,8 @@ var flagFTG = 0;
 var activityArray = [0,0,0,0,0,0,0];
 var startDate = new Date("2014-04-09");
 
+var friendArray = [];
+
 $(document).ready(function () {
 
     /* If first time use */
@@ -108,12 +110,7 @@ $(document).ready(function () {
     /* Friends */
     /************************************************************************/
     // TODO: Loop through database to get friend list
-    var friendArray = ["Morgan", "Charles", "Shaohan", "Kate"];
-    var friendDesc = ["Accomplished 3 goals", "Achieved 1500 lbs", "Accomplished 2 goals", "Accomplished 1 goals"]
-
-    for (var i=1; i<friendArray.length+1; i++) {
-        $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button class="button-small">Message</button><button class="button-small">Challenge</button></div></div>');
-    };
+    getFriends();
 
     /* Comment off for hiding the Message & Challenge buttons */
     // $("html").on("click", function(){
@@ -130,7 +127,6 @@ $(document).ready(function () {
 
 
     /* Achievements */
-    // TODO: Loop through database to get badge list
     checkBadge();
 
     //Show exercise .gif based on which is selected.
@@ -205,6 +201,7 @@ function updateGoals() {
         function(data) {
           console.log("post addGoal");
           // TODO: FIX the disappearing modal window
+          // seems to be fixed..
           // window.location.href = "/"; 
           getNewBadge(1);
         }
@@ -215,10 +212,37 @@ function updateGoals() {
   });
 }
 
+function getFriends() {
+
+  $.post("/getFriendActivities",
+    { username: "" },
+    function(data) {
+      friendArray = data;
+      updateFriends();
+    }
+  );
+}
+
+function updateFriends() {
+
+  for (var i=1; i<friendArray['userInfo'].length+1; i++) {
+
+    $("section.social div.card").append('<div class="friend lines clear" id="friend'+i+'"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray['userInfo'][i-1]['username']+'.png"></div><div class="menu" id="menu'+i+'"></div></div>');
+
+    for (var k=0; k<7; k++) {
+      var code = '<div class="code" id="code-'+i+k+'"></div>';
+      $("#menu"+i).append(code);
+      $("#code-"+i+k).addClass("level-"+friendArray['userInfo'][i-1]['act_day'+k]);
+    }
+  }
+
+}
+
+
 function getActivities() {
   $.post("/getActivities",
     function(data) {
-      console.log(data);
+      // console.log(data);
       for (var i=0; i<7; i++) {
         activityArray[i] = data['userInfo']['act_day'+i];
       }
@@ -262,10 +286,6 @@ function determineActivity() {
         console.log("Something wrong with activity map");
       }
       activityArray[diff] = level;
-
-      // activityArray[diff] = data['activityUpdateInfo']['G'];
-
-      // console.log("activityArray: "+activityArray);
       for (var i=1; i<activityArray.length+1; i++) {
         var code = '<div class="code" id="code-'+i+'"></div>';
         $("#activity-map").append(code);

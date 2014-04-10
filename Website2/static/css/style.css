@@ -410,9 +410,9 @@ div.friend .desc {
 	padding-left: 15px;
 }
 div.friend .menu {
-	display: none;
+	/*display: none;*/
 	float: left;
-	padding-top: 45px;
+	padding-top: 27px;
 	padding-left: 15px;
 }
 
@@ -426,16 +426,22 @@ div#activity-map .code {
 	display: inline-block;
 	margin: 3px;
 }
-div#activity-map .code.level-0 {
+div.friend .code {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	margin: 1.5px;
+}
+.code.level-0 {
 	background-color: #eee;
 }
-div#activity-map .code.level-1 {
+.code.level-1 {
 	background-color: #DBE089;
 }
-div#activity-map .code.level-2 {
+.code.level-2 {
 	background-color: #9CBF66;
 }
-div#activity-map .code.level-3 {
+.code.level-3 {
 	background-color: #386323;
 }
 

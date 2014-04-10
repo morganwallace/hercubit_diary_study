@@ -191,6 +191,20 @@ def getActivities():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
+@app.route('/getFriendActivities', methods=['POST'])
+def getFriendActivities():
+	print 'getFriendActivities'
+	# if 'username' in request.cookies:
+		# username = request.cookies.get('username')
+		# username = request.form['username']
+
+	url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php"
+	response = urllib2.urlopen(url)
+	userInfo = json.load(response)
+
+	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
+
 @app.route('/determineActivity', methods=['POST'])
 def determineActivity():
 	print 'determineActivity'
