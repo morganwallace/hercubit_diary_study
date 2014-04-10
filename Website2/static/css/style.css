@@ -277,6 +277,10 @@ div.lines:hover {
 }
 
 /* for achievements */
+#achievements_title{
+	padding-left: 10px;
+}
+
 div.achievement .icon {
 	float: left;
 	margin: 30px;

@@ -8,6 +8,7 @@ $(document).ready(function(){
         if ($('#startbtn').html()=='Done'){
             // console.log($("#chosen-goal .goal_count").text());
             // console.log($("#count_denomenator").html());
+            $("#connection_status").text("Searching for Hercubit device on bluetooth");
             $("#count_denomenator").text("/"+$("#chosen-goal .goal_count").text());
             socket.emit('bluetooth_conn');
         }
@@ -17,6 +18,7 @@ $(document).ready(function(){
     //Device is connected now so request data from server at the sample rate
     socket.on('connection established', function(msg) {
         $('#log').append('<p>Bluetooth Connection Established</p>');
+        $("#connection_status").text("Connected. Start Exercising!");
         fetch_data = setInterval( function() { 
             socket.emit('get_sample');
             if ($('#startbtn').html()=='Start'){
