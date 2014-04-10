@@ -47,6 +47,12 @@ $(document).ready(function(){
     //Triggers for Web Socket
     //
     var finished_exercising= function(){
+        // console.log("bbb");
+        getNewBadge(2);
+        getNewBadge(3);
+        getNewBadge(4);
+        getNewBadge(5);
+
         //Gather data about exercise session for insertion into database
         var thisgoal=$("#chosen-goal span").html();
         var type=$("#chosen-goal .exercise_type").text();
@@ -62,7 +68,9 @@ $(document).ready(function(){
         var exercise_data={'username':username,count:count,"type":type,"weight":weight,"goal_complete":goal_complete};
         socket.emit('stop',exercise_data);
         $("#count_numerator").text(0);
-        $("#count_numerator").css("color",'black')
+        $("#count_numerator").css("color",'black');
+
+        
     }
     //
 

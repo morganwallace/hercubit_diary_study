@@ -45,6 +45,7 @@ def index():
 		username = ""
 		goals = ""
 
+
 	return render_template('index.html',username=username,month=time.strftime("%B"),goals=goals)
 
 
@@ -121,10 +122,10 @@ def deleteGoal():
 	if 'username' in request.cookies:
 		
 		username = request.cookies.get('username')
-		print username
+		# print username
 
 		goalId = request.form['id'][5:]
-		print goalId
+		# print goalId
 
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/deleteGoal.php?id="+goalId
 		response = urllib2.urlopen(url)
@@ -144,9 +145,25 @@ def checkBadge():
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php?username="+username
 		response = urllib2.urlopen(url)
 		userInfo = json.load(response)
-		print userInfo
+		# print userInfo
 
 	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
+
+@app.route('/determineBadge', methods=['POST'])
+def determineBadge():
+	print 'determineBadge'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
+		badgeNum = request.form['badgeNum']
+		# print username
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/determineBadge.php?username="+username+"&badgeNum="+badgeNum
+		response = urllib2.urlopen(url)
+		badgeInfo = json.load(response)
+		print badgeInfo
+
+	resp = make_response(jsonify(badgeInfo=badgeInfo))
 	return resp
 
 @app.route('/insertBadge', methods=['POST'])

@@ -4,6 +4,7 @@
 var badgeName = ["Newbie","Goal","Strike3","Strike7","Five","Completion"];
 var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","3-day Strike!","7-day Strike!","Five sessions!","Complete your first exercise!"];
 var badgeArray = [0,0,0,0,0,0];
+var flagFTG = 0;
 
 $(document).ready(function () {
 
@@ -181,6 +182,9 @@ function updateGoals() {
       $("#modal-overlay").hide();
       $("#modal-goal").hide();
       $("#modal-badge").hide();
+      if (flagFTG==1) {
+        window.location.href = "/"; 
+      }
   });
   $("#modal-add-goal").submit(function(e){
       $("#modal-overlay").hide();
@@ -191,7 +195,7 @@ function updateGoals() {
         function(data) {
           console.log("post addGoal");
           // TODO: FIX the disappearing modal window
-          window.location.href = "/";
+          // window.location.href = "/"; 
           getNewBadge(1);
         }
       );
@@ -242,17 +246,36 @@ function getNewBadge (badgeNum) {
   checkBadge();
 
   if (badgeArray[badgeNum]==0) {
-    $("#modal-badge").find("h1").text(badgeName[badgeNum]);
-    $("#modal-badge").find("img").attr("src","../static/img/"+badgeName[badgeNum]+".png");
-    $("#modal-badge").find("span").text("You've " + badgeDesc[badgeNum]);
-    $("#modal-overlay").show();
-    $("#modal-badge").show();
-    $("#modal-badge").addClass("animated bounceIn");
-
-    insertBadge(badgeNum);
+    // doesn't have the badge
+    // put sql determine call here
+    determineBadge(badgeNum);
+  }
+  if (badgeArray[1]==1 && badgeNum==1) {
+    window.location.href = "/"; 
   }
 
-    
+}
+
+function determineBadge (badgeNum) {
+  $.post("/determineBadge",
+    { badgeNum: badgeNum },
+    function(data) {
+      console.log(data['badgeInfo']['st']);
+      if (data['badgeInfo']['st']==1) {
+        $("#modal-badge").find("h1").text(badgeName[badgeNum]);
+        $("#modal-badge").find("img").attr("src","../static/img/"+badgeName[badgeNum]+".png");
+        $("#modal-badge").find("span").text("You've " + badgeDesc[badgeNum]);
+        $("#modal-overlay").show();
+        $("#modal-badge").show();
+        $("#modal-badge").addClass("animated bounceIn");
+        if (badgeNum==1) {
+          flagFTG = 1;
+        }
+
+        insertBadge(badgeNum);
+      }
+    }
+  )  
 }
 
 function insertBadge(badgeNum) {
