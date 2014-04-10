@@ -15,7 +15,7 @@
             <div class="header-action">
 
                 <span id="username"hidden>{{username}}</span>
-                <img src="../static/img/kate.png">
+                <img src={{ img_path }}>
 <!--                 <img src="../static/img/challenge.png">
                 <img src="../static/img/setting.png"> -->
                 <button id='logout' class="">Logout</button>
@@ -132,7 +132,12 @@
                 {% for goal in goals %}
                 <div class="goal lines clear" data-state="neutral" id="goal-{{ goal['id'] }}">
                     <div class="num">Goal {{ loop.index }}</div>
-                    <div class="desc"><span class='exercise_type'>{{ goal['exercise'] }}</span>: (<span class="goal_weight">{{ goal['weight'] }}</span> lbs) x <span class="goal_count">{{ goal['count']}}</span> </div>
+                    <div class="desc">
+                        <span class='exercise_type'>{{ goal['exercise'] }}</span>
+                        : (
+                        <span class="goal_weight">{{ goal['weight'] }}</span>
+                         lbs) x 
+                         <span class="goal_count">{{ goal['count']}}</span></div>
                     <div class="trash"><img src="../static/img/trash.png"></div>
                 </div>          
                 {% endfor %}
