@@ -1,14 +1,17 @@
 $(document).ready(function(){
-    // var connected = false;
-    var stopped =false;
-    var samples = {};
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
-    
-    //
-    //    Receivers for Web Sockets
-    //
-    socket.on('connect', function(msg) {
-        $('#log').append('<p>Web Socket Established</p>');
+
+
+    // How these websockets work: 
+    // 1. Start button clicked triggers the bluetooth_conn function on app.py 
+    $('#startbtn').click(function(event) {
+        if ($('#startbtn').html()=='Done'){
+            // console.log($("#chosen-goal .goal_count").text());
+            // console.log($("#count_denomenator").html());
+            $("#count_denomenator").text("/"+$("#chosen-goal .goal_count").text());
+            socket.emit('bluetooth_conn');
+        }
+        return false;
     });
 
     //Device is connected now so request data from server at the sample rate
@@ -16,17 +19,23 @@ $(document).ready(function(){
         $('#log').append('<p>Bluetooth Connection Established</p>');
         fetch_data = setInterval( function() { 
             socket.emit('get_sample');
-            // console.log('rate to fetch data from server/device: '+msg.sample_rate)
             if ($('#startbtn').html()=='Start'){
                 clearInterval(fetch_data);
                 finished_exercising()
             }
         }, msg.sample_rate);
     });
-    
+    var goal_completed = function(){
+        var goal_num=$("#chosen-goal .goal_count").text()*1;
+        var count= $("#count_numerator").html()*1;
+        if (count>=goal_num){
+            $("#count_numerator").css("color",'green')
+        }
+    }
     // Show output of device in DOM
     socket.on('device response', function(msg) {
         $("#count_numerator").html(msg.data)
+        goal_completed()
     });
 
 
@@ -45,35 +54,18 @@ $(document).ready(function(){
         var goal_num=$("#chosen-goal .goal_count").text()*1;
         var count= $("#count_numerator").html()*1;
         var goal_complete= "0";
-        console.log(count+" "+goal_num)
         if (count>=goal_num){
-            console.log(' yay, goal completed');
+            console.log('goal completed');
             goal_complete="1";
         }
         var username= $("#username").text();
         var exercise_data={'username':username,count:count,"type":type,"weight":weight,"goal_complete":goal_complete};
         socket.emit('stop',exercise_data);
         $("#count_numerator").text(0);
+        $("#count_numerator").css("color",'black')
     }
     //
-    $('#startbtn').click(function(event) {
-        if ($('#startbtn').html()=='Done'){
-            socket.emit('bluetooth_conn');
-        }
-        //finished exercising
-        // else {
-        //     finished_exercising()
 
-        // }
-        return false;
-    });
-    $('form#stop').submit(function(event) {
-        socket.emit('stop');
-        return false;
-    });
+
     
-    $('form#signup-form').submit(function(event) {
-        socket.emit('signup');
-        return false;
-    });
 });

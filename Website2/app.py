@@ -136,21 +136,7 @@ def checkBadge():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
-def addexercise(exercise_data):
-	count= exercise_data['count']
-	username = request.cookies.get('username')
-	exercise=exercise_data['type']
-	count=exercise_data['count']
-	weight=exercise_data['weight']
-	goal_complete=exercise_data['goal_complete']
 
-	url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+str(count)+"&weight="+str(weight)+"&goal_complete="+goal_complete
-	print url
-	response = urllib2.urlopen(url)
-	userInfo = json.load(response)
-	print userInfo
-	resp = make_response(jsonify(username=userInfo))
-	return resp
 ########################
 # connection with device
 
@@ -185,6 +171,23 @@ def get_sample():
 			emit('device response', {'data': count})
 
 
+#Exercise completed - add to DB
+def addexercise(exercise_data):
+	count= exercise_data['count']
+	username = request.cookies.get('username')
+	exercise=exercise_data['type']
+	count=exercise_data['count']
+	weight=exercise_data['weight']
+	goal_complete=exercise_data['goal_complete']
+
+	url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+str(count)+"&weight="+str(weight)+"&goal_complete="+goal_complete
+	print url
+	response = urllib2.urlopen(url)
+	userInfo = json.load(response)
+	print userInfo
+	resp = make_response(jsonify(username=userInfo))
+	return resp
+
 @socketio.on('stop', namespace='/test')
 def stop(exercise_data):
 	global DEVICE_CONNECTED, ser
@@ -192,12 +195,11 @@ def stop(exercise_data):
 	ser.close()
 	ser =''
 	hercubit.rep_tracker.rep_count=0
-	#send to database
+	
+	#send to database - SEE ABOVE FUNCTION
 	addexercise(exercise_data)
 	
 	DEVICE_CONNECTED=False
-	# from hercubit.settings import ser
-	# ser.close()
 	print "stopped"
 	emit('Bluetooth Connection Stopped')
 
