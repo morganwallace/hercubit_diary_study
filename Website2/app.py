@@ -39,7 +39,7 @@ def index():
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getAllGoals.php?username="+username
 		response = urllib2.urlopen(url)
 		goals = json.load(response)
-		app.logger.debug(goals)
+		# app.logger.debug(goals)
 	else: 
 		print "else"
 		username = ""
@@ -51,14 +51,27 @@ def index():
 @app.route('/signup', methods=['POST'])
 def signup():
 	# global username
-	print 'test'
 	username = request.form['username']
 	# email= request.form['signup-email']
 	app.logger.debug("signup completed for username: " + username)
-	resp = make_response(jsonify(username=username))
+	
+	url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php?username="+username
+	response = urllib2.urlopen(url)
+	userInfo = json.load(response)
+	
+	
+	#no user by this name so make a new one in 'user' table.
+	new_user=False
+	if userInfo ==False:
+		app.logger.debug("username: "+username+" not found. Creating user")
+		url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/addNewUser.php?username="+username
+		response = urllib2.urlopen(url)
+		userInfo = json.load(response)
+		new_user=True
+	resp = make_response(jsonify(username=username,new_user=new_user))
 	# This is where we would create a new user in fusion tables
 	#
-	resp.set_cookie('username', username)
+	resp.set_cookie('username', username,)
 	return resp
 
 @app.route('/logout', methods=['POST'])

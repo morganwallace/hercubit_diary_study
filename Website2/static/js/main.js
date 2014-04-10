@@ -11,8 +11,7 @@ $(document).ready(function () {
     var firstTimeUse = 1;
 
     if ($("#username").html()!='') {
-        console.log('user already logged in as:')
-        console.log($("#username").html());
+        console.log('user already logged in as: '+ $("#username").text())
         firstTimeUse=false;
     }
     if (firstTimeUse) {
@@ -27,8 +26,9 @@ $(document).ready(function () {
         $("#signup-form").hide();
         $("header div.header-action").show();
         e.preventDefault();
+        $("#username").text($("#username").text().toLowerCase())
         signup();
-        getNewBadge(0);
+        
     });
 
 
@@ -36,10 +36,13 @@ $(document).ready(function () {
       $.post("./signup",
         $("#signup").serialize(),
         function(data){
-            console.log('refresh?');
+            console.log('signup');
+            console.log(data.new_user);
+          if(data.new_user == false){
             window.location.href= "/";
-          if(data.success == true){
-            
+          }
+          else{
+            getNewBadge(0);
           }
       
           return false;
