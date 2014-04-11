@@ -6,5 +6,5 @@ pwd
 # 
 python update_venv_path.py
 source venv/bin/activate
-python Website2/app.py
+python Website2/app.py production
 # pwd
