@@ -396,24 +396,29 @@ div.friend {
     -o-transition: -o-height .4s ease-in-out;
     transition: height .4s ease-in-out;*/
 }
-div.friend .num {
+div.friend .left {
 	float: left;
-	margin: 30px;
+	width: 60px;
+}
+div.friend .right {
+	float: left;
 }
 div.friend .icon {
 	float: left;
 	padding-top: 15px;
+	padding-left: 20px;
 }
-div.friend .desc {
-	float: left;
-	padding-top: 30px;
-	padding-left: 15px;
+div.friend .name {
+	/*float: left;*/
+	margin-top: 10px;
+	margin-left: 30px;
 }
+
 div.friend .menu {
 	/*display: none;*/
 	float: left;
-	padding-top: 27px;
-	padding-left: 15px;
+	padding-top: 5px;
+	padding-left: 30px;
 }
 
 /* for activity */
