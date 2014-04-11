@@ -99,9 +99,7 @@ def run(data):
 
 
 ser,conn_type=device.connect(bluetooth_enabled=False)
-ani = animation.FuncAnimation(fig, run, device.sensor_stream(ser,conn_type), blit=False, interval=100,
-    repeat=False)
-def animate():
-    ani = animation.FuncAnimation(fig, run, device.sensor_stream,ser,conn_type, blit=False, interval=100,
-    repeat=False)
+generator=device.sensor_stream(ser,conn_type)
+ani = animation.FuncAnimation(fig, run, generator, blit=False, interval=100,repeat=False)
+
 plt.show()

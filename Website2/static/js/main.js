@@ -49,6 +49,7 @@ $(document).ready(function () {
             window.location.href= "/";
           }
           else{
+            console.log('checking for new user')
             getNewBadge(0);
           }
       
@@ -317,6 +318,7 @@ function updateActivity(diff, level) {
 function checkBadge() {
   $.post("/checkBadge",
     function(data) {
+      console.logt(data)
       for (var i=1; i<7; i++) {
         badgeArray[i-1] = data['userInfo']['badge'+i];
       }
@@ -353,7 +355,8 @@ function updateBadge() {
 
 function getNewBadge (badgeNum) {
   checkBadge();
-
+  // console.log(badgeNum);
+  // console.log(badgeArray[badgeNum]);
   if (badgeArray[badgeNum]==0) {
     // doesn't have the badge
     // put sql determine call here
@@ -407,7 +410,7 @@ function forTooltip(i) {
 
 
 
-window.onbeforeunload = function(){
-    return "Please instead click 'Quit' in the top right to exit and allow the application to shutdown as well. Thank you.";
-}
+// window.onbeforeunload = function(){
+//     return "Please instead click 'Quit' in the top right to exit and allow the application to shutdown as well. Thank you.";
+// }
 

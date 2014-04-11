@@ -54,7 +54,7 @@ $(document).ready(function(){
     //Triggers for Web Socket
     //
     var finished_exercising= function(){
-        // console.log("bbb");
+        socket.emit('stop');
         determineActivity();
         getNewBadge(2);
         getNewBadge(3);
@@ -74,7 +74,7 @@ $(document).ready(function(){
         }
         var username= $("#username").text();
         var exercise_data={'username':username,count:count,"type":type,"weight":weight,"goal_complete":goal_complete};
-        socket.emit('stop',exercise_data);
+        socket.emit('addexercise',exercise_data);
         $("#count_numerator").text(0);
         $("#count_numerator").css("color",'black');
 
@@ -89,21 +89,21 @@ $(document).ready(function(){
         window.open('','_self').close();
     })
 
-    setInterval(function(){
-        $.ajax({
-          type: "POST",
-          url: "./test_connection",
-          data: "test",
-          success: function(msg){
-                console.log('connected to server');
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-             window.onbeforeunload = function(){}
-            window.open('','_self').close();
-          }
-        });
+    // setInterval(function(){
+    //     $.ajax({
+    //       type: "POST",
+    //       url: "./test_connection",
+    //       data: "test",
+    //       success: function(msg){
+    //             console.log('connected to server');
+    //       },
+    //       error: function(XMLHttpRequest, textStatus, errorThrown) {
+    //          window.onbeforeunload = function(){}
+    //         window.open('','_self').close();
+    //       }
+    //     });
         
-    },15000);
+    // },15000);
         
     
 });

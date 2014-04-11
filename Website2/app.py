@@ -277,6 +277,7 @@ def get_sample():
 
 
 #Exercise completed - add to DB
+@socketio.on('addexercise', namespace='/test')
 def addexercise(exercise_data):
 	count= exercise_data['count']
 	username = request.cookies.get('username')
@@ -293,7 +294,7 @@ def addexercise(exercise_data):
 	return resp
 
 @socketio.on('stop', namespace='/test')
-def stop(exercise_data):
+def stop():
 	global DEVICE_CONNECTED, ser, t0
 	ser.close()
 	ser =''
@@ -302,7 +303,7 @@ def stop(exercise_data):
 	# t0=0
 	# reset()
 	#send to database - SEE ABOVE FUNCTION
-	addexercise(exercise_data)
+	# addexercise(exercise_data)
 	
 	DEVICE_CONNECTED=False
 	print "Connection stopped"
