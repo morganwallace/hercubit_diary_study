@@ -79,3 +79,7 @@ if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
     hash -r 2>/dev/null
 fi
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f62c729113125ee14253a56e0823fe606b388ecd
