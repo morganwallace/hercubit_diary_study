@@ -6,7 +6,7 @@ import sys
 import hercubit
 import urllib2,json
 import sys
-from hercubit import html_graph
+# from hercubit import html_graph
 
 
 app = Flask(__name__)
