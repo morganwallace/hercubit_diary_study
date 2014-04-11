@@ -6,5 +6,10 @@ pwd
 # 
 python update_venv_path.py
 source venv/bin/activate
+echo Updating to latest version of Hercubit
+git add saved/
+git commit -m "adding raw_data"
+git pull
+git push
 python Website2/app.py production
 # pwd
