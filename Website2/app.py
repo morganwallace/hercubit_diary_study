@@ -251,7 +251,7 @@ def bluetooth_conn():
 	print "user requested connection"
 	DEVICE_CONNECTED=True
 	from hercubit import device
-	ser,conn_type=device.connect(bluetooth_enabled=False)
+	ser,conn_type=device.connect(bluetooth_enabled=True)
 	device_data_generator=device.sensor_stream(ser,conn_type)#simulate_sample_rate=False
 	from hercubit.settings import sampleRate
 	emit('connection established',{'sample_rate': sampleRate*1000})
@@ -267,8 +267,8 @@ def get_sample():
 		if t0==0: t0=time.time()
 		sample=device_data_generator.next()
 		# print sample #uncomment to see raw output
-		graph_html=hercubit.html_graph.run(sample,t0)
-		emit('graph',{"graph":graph_html})
+		# graph_html=hercubit.html_graph.run(sample,t0)
+		# emit('graph',{"graph":graph_html})
 		# print graph_html
 		# app.logger.debug("done with grapher")
 		count=rep_tracker.live_peaks(sample)
@@ -298,9 +298,9 @@ def stop(exercise_data):
 	ser.close()
 	ser =''
 	hercubit.rep_tracker.rep_count=0
-	from hercubit.html_graph import reset
-	t0=0
-	reset()
+	# from hercubit.html_graph import reset
+	# t0=0
+	# reset()
 	#send to database - SEE ABOVE FUNCTION
 	addexercise(exercise_data)
 	
