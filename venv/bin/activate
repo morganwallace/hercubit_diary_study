@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/Morgan/Developer/Fitness-Tracking/venv"
+VIRTUAL_ENV="/Users/Morgan/Developer/test_build/hercubit_diary_study/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -78,3 +78,4 @@ alias pydoc="python -m pydoc"
 if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
     hash -r 2>/dev/null
 fi
+
