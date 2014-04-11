@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/Morgan/Developer/test_build/hercubit_diary_study/venv"
+VIRTUAL_ENV="/Users/Morgan/Developer/Fitness-Tracking/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -114,3 +114,4 @@ fi
 
 =======
 >>>>>>> 671b44d05fe98b68660d1fbedec10ba9aaffa862
+
