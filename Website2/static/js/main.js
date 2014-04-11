@@ -134,14 +134,14 @@ $(document).ready(function () {
     //Show exercise .gif based on which is selected.
   $("#pick_exercise").change(function(){
     console.log($("#pick_exercise").val());
-    if($("#pick_exercise").val()=='Tricep curls'){
+    if($("#pick_exercise").val()=='Tricep'){
       console.log("changing to tricp gif")
       $("#goal_pic_gif").html('<img src="../static/img/tricep_kickbacks.gif">');
     }
-    else if($("#pick_exercise").val()=='Bicep curls'){
+    else if($("#pick_exercise").val()=='Bicep'){
      $("#goal_pic_gif").html('<img src="../static/img/bicep_curl.gif">'); 
     }
-    else if($("#pick_exercise").val()=='Shoulder press'){
+    else if($("#pick_exercise").val()=='Shoulder'){
      $("#goal_pic_gif").html('<img src="../static/img/shoulder_press.gif">');  
     }
   });
