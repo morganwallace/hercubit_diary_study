@@ -171,7 +171,6 @@ def insertBadge():
 	if 'username' in request.cookies:
 		username = request.cookies.get('username')
 		badgeNum = request.form['badgeNum']
-		# print username
 
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewBadge.php?username="+username+"&badgeNum="+badgeNum
 		response = urllib2.urlopen(url)
@@ -182,7 +181,61 @@ def insertBadge():
 	return resp
 
 
+@app.route('/getActivities', methods=['POST'])
+def getActivities():
+	print 'getActivities'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
 
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php?username="+username
+		response = urllib2.urlopen(url)
+		userInfo = json.load(response)
+
+	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
+
+@app.route('/getFriendActivities', methods=['POST'])
+def getFriendActivities():
+	print 'getFriendActivities'
+	# if 'username' in request.cookies:
+		# username = request.cookies.get('username')
+		# username = request.form['username']
+
+	url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getUser.php"
+	response = urllib2.urlopen(url)
+	userInfo = json.load(response)
+
+	resp = make_response(jsonify(userInfo=userInfo))
+	return resp
+
+@app.route('/determineActivity', methods=['POST'])
+def determineActivity():
+	print 'determineActivity'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/determineActivity.php?username="+username
+		response = urllib2.urlopen(url)
+		activityInfo = json.load(response)
+
+	resp = make_response(jsonify(activityInfo=activityInfo))
+	return resp
+
+@app.route('/updateActivity', methods=['POST'])
+def updateActivity():
+	print 'updateActivity'
+	if 'username' in request.cookies:
+		username = request.cookies.get('username')
+		diff = request.form['diff']
+		level = request.form['level']
+		print level
+
+		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/updateActivity.php?username="+username+"&diff="+diff+"&level="+level
+		response = urllib2.urlopen(url)
+		activityInfo = json.load(response)
+
+	resp = make_response(jsonify(activityInfo=activityInfo))
+	return resp
 
 ########################
 # connection with device

@@ -6,6 +6,11 @@ var badgeDesc = ["Signed up for Hercubit!", "Set your first goal!","3-day Strike
 var badgeArray = [0,0,0,0,0,0];
 var flagFTG = 0;
 
+var activityArray = [0,0,0,0,0,0,0];
+var startDate = new Date("2014-04-09");
+
+var friendArray = [];
+
 $(document).ready(function () {
 
     /* If first time use */
@@ -101,25 +106,13 @@ $(document).ready(function () {
 
     /* Activity */
     /************************************************************************/
-    // TODO: Get activity freq from database
-    var activityArray = [0,1,2,0,3,2,1];
-
-    for (var i=1; i<activityArray.length+1; i++) {
-        var code = '<div class="code" id="code-'+i+'"></div>';
-        $("#activity-map").append(code);
-        $("#code-"+i).addClass("level-"+activityArray[i-1]);
-    }
+    getActivities();
 
 
     /* Friends */
     /************************************************************************/
     // TODO: Loop through database to get friend list
-    var friendArray = ["Morgan", "Charles", "Shaohan", "Kate"];
-    var friendDesc = ["Accomplished 3 goals", "Achieved 1500 lbs", "Accomplished 2 goals", "Accomplished 1 goals"]
-
-    for (var i=1; i<friendArray.length+1; i++) {
-        $("section.social div.card").append('<div class="friend lines clear"><div class="num">'+i+'</div><div class="icon"><img src="../static/img/'+friendArray[i-1]+'.png"></div><div class="desc">'+friendDesc[i-1]+'</div><div class="menu"><button class="button-small">Message</button><button class="button-small">Challenge</button></div></div>');
-    };
+    getFriends();
 
     /* Comment off for hiding the Message & Challenge buttons */
     // $("html").on("click", function(){
@@ -136,7 +129,6 @@ $(document).ready(function () {
 
 
     /* Achievements */
-    // TODO: Loop through database to get badge list
     checkBadge();
 
     //Show exercise .gif based on which is selected.
@@ -213,8 +205,10 @@ function updateGoals() {
         function(data) {
           console.log("post addGoal");
           // TODO: FIX the disappearing modal window
-          // window.onbeforeunload = function(){}
-          // window.location.href = "/"; 
+
+          // seems to be fixed..
+
+
           getNewBadge(1);
         }
       );
@@ -222,6 +216,102 @@ function updateGoals() {
       e.preventDefault();
 
   });
+}
+
+function getFriends() {
+
+  $.post("/getFriendActivities",
+    { username: "" },
+    function(data) {
+      friendArray = data;
+      updateFriends();
+    }
+  );
+}
+
+function updateFriends() {
+
+  for (var i=1; i<friendArray['userInfo'].length+1; i++) {
+
+    $("section.social div.card").append('<div class="friend lines clear" id="friend'+i+'"><div class="left"><div class="icon"><img src="../static/img/'+friendArray['userInfo'][i-1]['username']+'.png"></div></div><div class="right"><div class="name">'+friendArray['userInfo'][i-1]['username']+'</div><div class="menu" id="menu'+i+'"></div></div></div>');
+
+    for (var k=0; k<7; k++) {
+      var code = '<div class="code" id="code-'+i+k+'"></div>';
+      $("#menu"+i).append(code);
+      $("#code-"+i+k).addClass("level-"+friendArray['userInfo'][i-1]['act_day'+k]);
+    }
+  }
+
+}
+
+
+function getActivities() {
+  $.post("/getActivities",
+    function(data) {
+      // console.log(data);
+      for (var i=0; i<7; i++) {
+        activityArray[i] = data['userInfo']['act_day'+i];
+      }
+      console.log("activityArray: "+activityArray);
+      for (var i=1; i<activityArray.length+1; i++) {
+        var code = '<div class="code" id="code-'+i+'"></div>';
+        $("#activity-map").append(code);
+        $("#code-"+i).addClass("level-"+activityArray[i-1]);
+      }
+
+    }
+  );  
+}
+
+function determineActivity() {
+  $.post("/determineActivity",
+    function(data) {
+      // console.log(data);
+      var todayDate = new Date();
+      var diff = new Date(todayDate-startDate);
+      diff = Math.floor(diff/1000/60/60/24);
+      console.log("diff"+diff);
+      var e = data['activityInfo']['E'];
+      var g = data['activityInfo']['G'];
+      var level = 0;
+
+      if (e==0) {
+        level = 0;
+      }
+      else if (e<g) {
+        level = 1;
+      }
+      else if (e==g) {
+        level = 2;
+      }
+      else if (e>g) {
+        level = 3;
+      }
+      else {
+        level = 0;
+        console.log("Something wrong with activity map");
+      }
+      activityArray[diff] = level;
+      for (var i=1; i<activityArray.length+1; i++) {
+        var code = '<div class="code" id="code-'+i+'"></div>';
+        $("#activity-map").append(code);
+        $("#code-"+i).addClass("level-"+activityArray[i-1]);
+      }
+
+      updateActivity(diff, level);
+    }
+  );    
+}
+
+function updateActivity(diff, level) {
+  console.log("updateActivity, diff="+diff);
+  $.post("/updateActivity",
+    { diff: diff,
+      level: level },
+    function(data) {
+      console.log("updateActivity success");
+    }
+  );
 }
 
 function checkBadge() {
@@ -306,7 +396,7 @@ function insertBadge(badgeNum) {
     function(data) {
       checkBadge();
     }
-  )
+  );
 };
 
 function forTooltip(i) {
