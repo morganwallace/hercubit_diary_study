@@ -6,6 +6,7 @@ import sys
 import hercubit
 import urllib2,json
 import sys
+import pickle
 # from hercubit import html_graph
 
 
@@ -257,15 +258,17 @@ def bluetooth_conn():
 	emit('connection established',{'sample_rate': sampleRate*1000})
 
 t0=0
+all_data=[]
 # Retrieve the data from device
 @socketio.on('get_sample', namespace='/test')
 @app.route('/getsample')
 def get_sample():
-	global device_data_generator, t0
+	global device_data_generator, t0,all_data
 	from hercubit import rep_tracker
 	if DEVICE_CONNECTED==True:
 		if t0==0: t0=time.time()
 		sample=device_data_generator.next()
+		all_data.append(sample)
 		# print sample #uncomment to see raw output
 		# graph_html=hercubit.html_graph.run(sample,t0)
 		# emit('graph',{"graph":graph_html})
@@ -279,12 +282,17 @@ def get_sample():
 #Exercise completed - add to DB
 @socketio.on('addexercise', namespace='/test')
 def addexercise(exercise_data):
+	global all_data
 	count= exercise_data['count']
 	username = request.cookies.get('username')
 	exercise=exercise_data['type']
 	count=exercise_data['count']
 	weight=exercise_data['weight']
 	goal_complete=exercise_data['goal_complete']
+	all_data={"raw":all_data,"count":count,"username":username,"exercise":exercise,'weight':weight}
+	path=os.path.join("saved",time.strftime("%m-%d-%Y--%H-%M-%S")+".p")
+	print os.listdir(os.getcwd())
+	pickle.dump( all_data, open( path, "wb" ) )
 
 	url="http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/insertNewExercise.php?username="+username+"&exercise="+exercise+"&count="+str(count)+"&weight="+str(weight)+"&goal_complete="+goal_complete
 	app.logger.debug("Exercise added to DB:\n"+str(exercise_data))
