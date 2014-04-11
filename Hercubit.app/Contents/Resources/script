@@ -12,6 +12,6 @@ echo Updating to latest version of Hercubit
 git add saved/
 git commit -m "adding raw_data"
 git pull
-git push
+# git push
 which python
 python Website2/app.py production
