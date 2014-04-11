@@ -283,6 +283,11 @@ div.lines:hover {
 	padding-left: 10px;
 }
 
+#leaderboard_title{
+	padding-left: 30px;
+	margin-top: 20px;	
+}
+
 div.achievement .icon {
 	float: left;
 	margin: 30px;
@@ -317,6 +322,17 @@ section.main #count[data-state="slide-out"] {
 	visibility: visible;
 	opacity: 1;
 	/*display: block;*/
+}
+#graph{
+	position: absolute;
+	top: 200px;
+	left: 100px;
+}
+/*.mpld3-figure{
+	width: 200px;
+}*/
+.mpld3-toolbar{
+	display: none;
 }
 
 div.button {

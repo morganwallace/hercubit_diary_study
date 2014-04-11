@@ -40,6 +40,7 @@ $(document).ready(function () {
             console.log('signup');
             console.log(data.new_user);
           if(data.new_user == false){
+            window.onbeforeunload = function(){}
             window.location.href= "/";
           }
           else{
@@ -61,6 +62,7 @@ $(document).ready(function () {
                     console.log('successful logout');
 
                     //send the user back to the log in screen by refreshing.
+                    window.onbeforeunload = function(){}
                     window.location.href ="/";
                 }
                 
@@ -173,6 +175,7 @@ function updateGoals() {
         // $("#modal-add-goal").serialize(),
         function(data) {
           console.log("delete goal");
+          window.onbeforeunload = function(){}
           window.location.href = "/";
         }
       );
@@ -197,6 +200,7 @@ function updateGoals() {
       $("#modal-goal").hide();
       $("#modal-badge").hide();
       if (flagFTG==1) {
+        window.onbeforeunload = function(){}
         window.location.href = "/"; 
       }
   });
@@ -209,6 +213,7 @@ function updateGoals() {
         function(data) {
           console.log("post addGoal");
           // TODO: FIX the disappearing modal window
+          // window.onbeforeunload = function(){}
           // window.location.href = "/"; 
           getNewBadge(1);
         }
@@ -265,6 +270,7 @@ function getNewBadge (badgeNum) {
     determineBadge(badgeNum);
   }
   if (badgeArray[1]==1 && badgeNum==1) {
+    window.onbeforeunload = function(){}
     window.location.href = "/"; 
   }
 
@@ -311,8 +317,7 @@ function forTooltip(i) {
 
 
 
+window.onbeforeunload = function(){
+    return "Please instead click 'Quit' in the top right to exit and allow the application to shutdown as well. Thank you.";
+}
 
-// window.onbeforeunload = confirmExit;
-// function confirmExit() {
-//     return "Please instead click 'Quit' in the top right to exit and allow the application to shutdown as well. Thank you.";
-// }

@@ -41,6 +41,10 @@ $(document).ready(function(){
         goal_completed()
     });
 
+    socket.on('graph', function(msg){
+        $("#graph").html(msg.graph)
+    });
+
 
     socket.on('Bluetooth Connection Stopped', function(msg) {
         $('#log').append('<p>Bluetooth connection Stopped</p>');
@@ -77,6 +81,28 @@ $(document).ready(function(){
     }
     //
 
+    $("#quit").click(function(){
+        socket.emit('quit');
+        console.log('quiting')
+        window.onbeforeunload = function(){}
+        window.open('','_self').close();
+    })
 
+    setInterval(function(){
+        $.ajax({
+          type: "POST",
+          url: "./test_connection",
+          data: "test",
+          success: function(msg){
+                console.log('connected to server');
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+             window.onbeforeunload = function(){}
+            window.open('','_self').close();
+          }
+        });
+        
+    },15000);
+        
     
 });

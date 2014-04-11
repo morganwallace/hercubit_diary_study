@@ -5,11 +5,13 @@ import os
 import sys
 import hercubit
 import urllib2,json
-
+import sys
+from hercubit import html_graph
 
 
 app = Flask(__name__)
-app.debug=True  # Disable this before distributing
+if 'production' not in sys.argv:
+	app.debug=True  # Disabled before distributing
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 device_data_generator=[]
@@ -35,13 +37,13 @@ def index():
 
 	if 'username' in request.cookies:
 		username = request.cookies.get('username')
-		print username
 		url = "http://people.ischool.berkeley.edu/~katehsiao/hercubit-db/getAllGoals.php?username="+username
 		response = urllib2.urlopen(url)
 		goals = json.load(response)
 		# app.logger.debug(goals)
 		img_path="../static/img/"+username+".png"
-	else: 
+	
+	else: #first time users
 		print "else"
 		username = ""
 		goals = ""
@@ -179,12 +181,15 @@ def insertBadge():
 	resp = make_response(jsonify(userInfo=userInfo))
 	return resp
 
+
+
+
 ########################
 # connection with device
 
-@app.route('/debug')
-def debug():
-    return render_template('web_socket_debug.html')
+# @app.route('/debug')
+# def debug():
+#     return render_template('web_socket_debug.html')
 
 
 @socketio.on('bluetooth_conn', namespace='/test')
@@ -198,16 +203,21 @@ def bluetooth_conn():
 	from hercubit.settings import sampleRate
 	emit('connection established',{'sample_rate': sampleRate*1000})
 
-
+t0=0
 # Retrieve the data from device
 @socketio.on('get_sample', namespace='/test')
 @app.route('/getsample')
 def get_sample():
-	global device_data_generator
+	global device_data_generator, t0
 	from hercubit import rep_tracker
 	if DEVICE_CONNECTED==True:
+		if t0==0: t0=time.time()
 		sample=device_data_generator.next()
 		# print sample #uncomment to see raw output
+		graph_html=hercubit.html_graph.run(sample,t0)
+		emit('graph',{"graph":graph_html})
+		# print graph_html
+		# app.logger.debug("done with grapher")
 		count=rep_tracker.live_peaks(sample)
 		if count!=None:
 			emit('device response', {'data': count})
@@ -231,11 +241,13 @@ def addexercise(exercise_data):
 
 @socketio.on('stop', namespace='/test')
 def stop(exercise_data):
-	global DEVICE_CONNECTED, ser
+	global DEVICE_CONNECTED, ser, t0
 	ser.close()
 	ser =''
 	hercubit.rep_tracker.rep_count=0
-	
+	from hercubit.html_graph import reset
+	t0=0
+	reset()
 	#send to database - SEE ABOVE FUNCTION
 	addexercise(exercise_data)
 	
@@ -254,6 +266,14 @@ def test_connect():
 def test_disconnect():
     print('Web Sockets: Client disconnected')
 
+@socketio.on('quit', namespace='/test')
+def exit():
+    quit()
+
+@app.route('/test_connection', methods=['POST'])
+def test_connection():
+	resp = make_response(jsonify(connected=True))
+	return resp
 
 
     
