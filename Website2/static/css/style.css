@@ -424,6 +424,11 @@ div.friend .icon {
 	padding-top: 15px;
 	padding-left: 20px;
 }
+div.friend .icon img {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+}
 div.friend .name {
 	/*float: left;*/
 	margin-top: 10px;
