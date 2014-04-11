@@ -10,6 +10,7 @@ for line in  activate_list:
 		activate_list[activate_list.index(line)]=updated_line
 		break
 activate.close()
+
 activate= open(CURRENT_DIR+'/venv/bin/activate','w')
 for line in activate_list:
 	activate.write(line +"\n")
