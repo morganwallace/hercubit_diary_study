@@ -233,7 +233,7 @@ function updateFriends() {
 
   for (var i=1; i<friendArray['userInfo'].length+1; i++) {
 
-    $("section.social div.card").append('<div class="friend lines clear" id="friend'+i+'"><div class="left"><div class="icon"><img src="../static/img/'+friendArray['userInfo'][i-1]['username']+'.png"></div></div><div class="right"><div class="name">'+friendArray['userInfo'][i-1]['username']+'</div><div class="menu" id="menu'+i+'"></div></div></div>');
+    $("section.social div.card").append('<div class="friend lines clear" id="friend'+i+'"><div class="left"><div class="icon"><img src="../static/img/'+friendArray['userInfo'][i-1]['username']+'.jpg"></div></div><div class="right"><div class="name">'+friendArray['userInfo'][i-1]['username']+'</div><div class="menu" id="menu'+i+'"></div></div></div>');
 
     for (var k=0; k<7; k++) {
       var code = '<div class="code" id="code-'+i+k+'"></div>';
