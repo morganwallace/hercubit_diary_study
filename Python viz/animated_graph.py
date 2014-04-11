@@ -9,7 +9,7 @@ from os.path import join
 import csv
 import time
 from hercubit import settings
-from hercubit.device import sensor_stream
+from hercubit import device 
 import mpld3
 # filename=join("labeled_data",raw_input("name this training set: "))
 samples=[]
@@ -87,10 +87,10 @@ def run(data):
         ax[1].figure.canvas.draw()
         ax[2].figure.canvas.draw()
     
-    # print mpld3.fig_to_html(fig)
-    # if time.time()>t0+3:
-    #     mpld3.show(fig)
-    #     quit()
+    print mpld3.fig_to_html(fig)
+    if time.time()>t0+3:
+        mpld3.show(fig)
+        quit()
 
 
     return None
@@ -98,7 +98,10 @@ def run(data):
     # ,lines['gyro']['x'],lines['accel']['x'],lines['gyro']['y'],lines['accel']['y'],lines['gyro']['z'],lines['accel']['z']
 
 
-
-ani = animation.FuncAnimation(fig, run, sensor_stream, blit=False, interval=100,
+ser,conn_type=device.connect(bluetooth_enabled=False)
+ani = animation.FuncAnimation(fig, run, device.sensor_stream(ser,conn_type), blit=False, interval=100,
+    repeat=False)
+def animate():
+    ani = animation.FuncAnimation(fig, run, device.sensor_stream,ser,conn_type, blit=False, interval=100,
     repeat=False)
 plt.show()
