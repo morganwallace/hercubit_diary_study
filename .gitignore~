@@ -2,4 +2,4 @@
 .DS_Store?
 */.DS_Store
 Python viz/saved_animations_and_data/2*
-venv/bin/*
+venv/bin/activate
