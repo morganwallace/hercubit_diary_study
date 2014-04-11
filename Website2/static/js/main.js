@@ -45,6 +45,7 @@ $(document).ready(function () {
             console.log('signup');
             console.log(data.new_user);
           if(data.new_user == false){
+            console.log("old user");
             window.onbeforeunload = function(){}
             window.location.href= "/";
           }
@@ -318,7 +319,7 @@ function updateActivity(diff, level) {
 function checkBadge() {
   $.post("/checkBadge",
     function(data) {
-      console.logt(data)
+      console.log(data)
       for (var i=1; i<7; i++) {
         badgeArray[i-1] = data['userInfo']['badge'+i];
       }
@@ -373,8 +374,8 @@ function determineBadge (badgeNum) {
   $.post("/determineBadge",
     { badgeNum: badgeNum },
     function(data) {
-      console.log(data['badgeInfo']['st']);
-      if (data['badgeInfo']['st']==1) {
+
+      if (data['badgeInfo']['st']==1 || badgeNum==0) {
         $("#modal-badge").find("h1").text(badgeName[badgeNum]);
         $("#modal-badge").find("img").attr("src","../static/img/"+badgeName[badgeNum]+".png");
         $("#modal-badge").find("span").text("You've " + badgeDesc[badgeNum]);

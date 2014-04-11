@@ -48,6 +48,7 @@ def index():
 		print "else"
 		username = ""
 		goals = ""
+		img_path=""
 
 
 	return render_template('index.html',username=username,month=time.strftime("%B"),goals=goals,img_path=img_path)
