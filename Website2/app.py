@@ -251,7 +251,7 @@ def bluetooth_conn():
 	print "user requested connection"
 	DEVICE_CONNECTED=True
 	from hercubit import device
-	ser,conn_type=device.connect(bluetooth_enabled=False)
+	ser,conn_type=device.connect(bluetooth_enabled=True)
 	device_data_generator=device.sensor_stream(ser,conn_type)#simulate_sample_rate=False
 	from hercubit.settings import sampleRate
 	emit('connection established',{'sample_rate': sampleRate*1000})
