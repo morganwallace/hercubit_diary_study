@@ -6,7 +6,7 @@ import sys
 import hercubit
 import urllib2,json
 import sys
-from hercubit import html_graph
+# from hercubit import html_graph
 
 
 app = Flask(__name__)
@@ -267,8 +267,8 @@ def get_sample():
 		if t0==0: t0=time.time()
 		sample=device_data_generator.next()
 		# print sample #uncomment to see raw output
-		graph_html=hercubit.html_graph.run(sample,t0)
-		emit('graph',{"graph":graph_html})
+		# graph_html=hercubit.html_graph.run(sample,t0)
+		# emit('graph',{"graph":graph_html})
 		# print graph_html
 		# app.logger.debug("done with grapher")
 		count=rep_tracker.live_peaks(sample)
@@ -298,9 +298,9 @@ def stop(exercise_data):
 	ser.close()
 	ser =''
 	hercubit.rep_tracker.rep_count=0
-	from hercubit.html_graph import reset
-	t0=0
-	reset()
+	# from hercubit.html_graph import reset
+	# t0=0
+	# reset()
 	#send to database - SEE ABOVE FUNCTION
 	addexercise(exercise_data)
 	
